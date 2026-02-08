@@ -2,15 +2,24 @@ version: "3"
 
 vars:
   PORT: '{{.PORT | default "7500"}}'
+  IMAGE_NAME: '{{.IMAGE_NAME | default "supportmailmaker"}}'
+  IMAGE_TAG: '{{.IMAGE_TAG | default "latest"}}'
 
 tasks:
+  # ---------------------------------------------------------------------------
+  #  Default
+  # ---------------------------------------------------------------------------
   default:
-    desc: Start the Generator Server
+    desc: Start the Generator Server (alias for 'start')
     cmds:
       - task: start
 
+  # ---------------------------------------------------------------------------
+  #  Server
+  # ---------------------------------------------------------------------------
   start:
     desc: Start the Generator Server on a given port
+    aliases: [serve, run]
     vars:
       PORT: '{{.CLI_ARGS | default .PORT}}'
     env:
@@ -23,14 +32,80 @@ tasks:
       - echo "Starting Generator Server on port {{.PORT}}..."
       - python support_mail_maker/app.py
 
+  # ---------------------------------------------------------------------------
+  #  Testing
+  # ---------------------------------------------------------------------------
+  test:
+    desc: Run the full test suite
+    aliases: [tests]
+    cmds:
+      - python -m pytest support_mail_maker/tests/ {{.CLI_ARGS}}
+
+  test:verbose:
+    desc: Run tests with verbose output
+    cmds:
+      - python -m pytest support_mail_maker/tests/ -v
+
+  test:coverage:
+    desc: Run tests with coverage report
+    cmds:
+      - python -m pytest support_mail_maker/tests/ --cov=support_mail_maker --cov-report=term-missing {{.CLI_ARGS}}
+
+  # ---------------------------------------------------------------------------
+  #  Linting & Formatting
+  # ---------------------------------------------------------------------------
+  lint:
+    desc: Run linters (isort check + black check)
+    cmds:
+      - python -m isort --check-only --diff support_mail_maker/
+      - python -m black --check support_mail_maker/
+
+  fmt:
+    desc: Auto-format code with isort and black
+    aliases: [format]
+    cmds:
+      - python -m isort support_mail_maker/
+      - python -m black support_mail_maker/
+
+  # ---------------------------------------------------------------------------
+  #  Docker
+  # ---------------------------------------------------------------------------
+  docker:build:
+    desc: Build the Docker image
+    cmds:
+      - echo "Building Docker image {{.IMAGE_NAME}}:{{.IMAGE_TAG}}..."
+      - docker build -t {{.IMAGE_NAME}}:{{.IMAGE_TAG}} .
+
+  docker:run:
+    desc: Run the application in a Docker container
+    deps: [docker:build]
+    cmds:
+      - echo "Running {{.IMAGE_NAME}}:{{.IMAGE_TAG}} on port {{.PORT}}..."
+      - >-
+        docker run --rm
+        -p {{.PORT}}:7500
+        --name supportmailmaker
+        {{.IMAGE_NAME}}:{{.IMAGE_TAG}}
+
+  docker:stop:
+    desc: Stop the running Docker container
+    cmds:
+      - docker stop supportmailmaker
+
+  # ---------------------------------------------------------------------------
+  #  Utilities
+  # ---------------------------------------------------------------------------
   clear-logs:
     desc: Clear the main log file
+    aliases: [clean-logs]
     cmds:
       - truncate -s 0 logs/main.log
     status:
       - test ! -f logs/main.log
 
-  test:
-    desc: Run the test suite
+  clean:
+    desc: Remove build artifacts, caches, and generated files
     cmds:
-      - python -m pytest
+      - rm -rf .pytest_cache __pycache__ support_mail_maker/__pycache__ support_mail_maker/tests/__pycache__
+      - find . -name "*.pyc" -delete 2>/dev/null || true
+      - task: clear-logs
