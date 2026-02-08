@@ -56,4 +56,5 @@ USER appuser
 
 EXPOSE 7500
 
-CMD ["task", "start"]
+ENTRYPOINT ["task"]
+CMD ["start"]
