@@ -1,0 +1,36 @@
+version: "3"
+
+vars:
+  PORT: '{{.PORT | default "7500"}}'
+
+tasks:
+  default:
+    desc: Start the Generator Server
+    cmds:
+      - task: start
+
+  start:
+    desc: Start the Generator Server on a given port
+    vars:
+      PORT: '{{.CLI_ARGS | default .PORT}}'
+    env:
+      GRADIO_SERVER_PORT: "{{.PORT}}"
+      GRADIO_NUM_PORTS: "1000"
+      GRADIO_NODE_NUM_PORTS: "1000"
+      GRADIO_ANALYTICS_ENABLED: "True"
+      SUPPORTMAIL_HTML_TEMPLATE: '{{.SUPPORTMAIL_HTML_TEMPLATE | default "./support_mail_maker/templates"}}'
+    cmds:
+      - echo "Starting Generator Server on port {{.PORT}}..."
+      - python support_mail_maker/app.py
+
+  clear-logs:
+    desc: Clear the main log file
+    cmds:
+      - truncate -s 0 logs/main.log
+    status:
+      - test ! -f logs/main.log
+
+  test:
+    desc: Run the test suite
+    cmds:
+      - python -m pytest

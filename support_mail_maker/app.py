@@ -1,7 +1,5 @@
 
 import asyncio
-from gettext import npgettext
-from math import e
 from os import environ, getenv
 import sys
 from datetime import datetime
@@ -116,14 +114,14 @@ def create_output():
     return output_file
 
 
-async def is_ready_to_publish_async(json_input: str, file_input: str, progress=gr.Progress(track_tqdm=True)) -> None:
+async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=gr.Progress(track_tqdm=True)) -> Any:
     """
     Check if content is ready for publishing and trigger formatting.
     """
     try:
         if json_input and json_input != PLACEHOLDER_JSON:
             file_input = None
-            current_edition['context']['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
+            current_edition.context['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
             content = json_input
         elif file_input is not None:
             json_input = None
@@ -139,7 +137,7 @@ async def is_ready_to_publish_async(json_input: str, file_input: str, progress=g
 
             # 4) Convert the reader to a list of dictionaries
                 content = list(csv_reader)
-                current_edition['context']['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
+                current_edition.context['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
         else:
             logger.warning("No valid input provided!")
             return None
@@ -169,20 +167,22 @@ def main(app):
     app.launch(
         inbrowser=True,
         debug=True,
-        share=False,
+        share=True,
         show_error=True,
         state_session_capacity=10000,
-        quiet=True,
-        enable_monitoring=True
+        quiet=False,
+        enable_monitoring=True,
+        server_port=int(getenv('GRADIO_SERVER_PORT', 7500))
     )
 
 if __name__ == "__main__":
     try:
         UI = build_interface(current_edition)
+        port = getenv('GRADIO_SERVER_PORT', '7500')
         print(
-            f"Starting The Presses at http://127.0.0.1:{getenv('GRADIO_SERVER_PORT')}...\n\n"
+            f"Starting The Presses at http://127.0.0.1:{port}...\n\n"
         )
-        asyncio.run(main(UI))
+        main(UI)
     except KeyboardInterrupt:
         print("\nProgram Terminated By User...\nResetting Logs...")
         clear_logs()

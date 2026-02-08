@@ -13,6 +13,7 @@ def start(ctx, port=7500):
         os.environ["GRADIO_NUM_PORTS"] = str(1000)
         os.environ["GRADIO_NODE_NUM_PORTS"] = str(1000)
         os.environ["GRADIO_ANALYTICS_ENABLED"] = "True"
+        os.environ.setdefault("SUPPORTMAIL_HTML_TEMPLATE", os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates"))
         print(f"Starting Generator Server on port {port}...")    
         ctx.run(f'{os.getenv("PYTHONPATH")} app.py', pty=True)
     except KeyboardInterrupt:
