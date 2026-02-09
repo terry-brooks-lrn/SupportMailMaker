@@ -79,7 +79,7 @@ def raw_content_data():
             "customer": "Acme Corp",
             "type": "Issue",
             "url": "https://support.example.com/tickets/12345",
-            "include": "✅",
+            "include": True,
         },
         {
             "title": "Reduced response time",
@@ -88,7 +88,7 @@ def raw_content_data():
             "customer": "Beta Inc",
             "type": "Win",
             "url": "https://support.example.com/tickets/67890",
-            "include": "✅",
+            "include": True,
         },
         {
             "title": "Incorrect billing calculation",
@@ -97,7 +97,7 @@ def raw_content_data():
             "customer": "Gamma LLC",
             "type": "Oops",
             "url": "",
-            "include": "✅",
+            "include": True,
         },
         {
             "title": "New API endpoint launched",
@@ -106,7 +106,7 @@ def raw_content_data():
             "customer": "All Customers",
             "type": "News",
             "url": "",
-            "include": "✅",
+            "include": True,
         },
         {
             "title": "Skipped item",
@@ -115,7 +115,7 @@ def raw_content_data():
             "customer": "Nobody",
             "type": "Issue",
             "url": "",
-            "include": "❌",
+            "include": False,
         },
     ]
 

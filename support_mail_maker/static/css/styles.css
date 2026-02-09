@@ -1,61 +1,205 @@
+/* =============================================
+   SupportMail — Learnosity brand stylesheet
+   =============================================
+   Brand palette
+     Midnight : #00313D
+     Cobalt   : #0071CE
+     Ruby     : #CE0E2D
+     White    : #FFFFFF
+   Typography : "Montserrat", Arial, sans-serif
+   ============================================= */
+
 body {
-	background-color: #f3f3f3;
-	color: #333;
-	font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  color: #00313D;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-	padding: 20px;
-	margin: 10px;
-	border: 1px solid #ccc;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  background-color: #FFFFFF;
 }
 
-.header-image,
+/* ── Header image (masthead, full-width) ───── */
+
+.header-image {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 0 12px 0;
+}
+
+/* ── Footer image ─────────────────────────── */
+
 .footer-image {
-	width: 100%;
-	max-width: 480px;
-	height: auto;
-	display: block;
-	margin: 0 auto;
+  max-width: 220px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 0 12px 0;
+}
+
+/* ── Typography ────────────────────────────── */
+
+h2 {
+  color: #00313D;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 24px 0 8px 0;
+}
+
+h3 {
+  color: #00313D;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 16px 0 6px 0;
 }
 
 p {
-	font-size: 11pt;
-	line-height: 1.38;
-	color: #000;
+  margin: 0 0 12px 0;
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 a {
-	color: #1155cc;
-	text-decoration: underline;
+  color: #0071CE;
+  text-decoration: underline;
 }
 
-ul.list {
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 2rem;
+/* ── Publish-date block ────────────────────── */
+
+.publish-date-label {
+  font-size: 10px;
+  font-style: italic;
+  color: #00313D;
+  margin: 0 0 2px 0;
 }
 
-ul ul {
-	list-style-type: circle;
-	margin-left: 20px;
+.publish-date-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #00313D;
+  margin: 0 0 16px 0;
 }
 
-li {
-	margin-top: 5px;
+/* ── Section intro text ────────────────────── */
+
+.content-section-intro-text {
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
 }
 
-.item-title {
-	font-weight: bold;
-	font-size: 10pt;
+/* ── Section header images ─────────────────── */
+
+.section-header-image {
+  max-width: 220px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 24px 0 0 0;
 }
-img {
-	float: left;
+
+/* ── One-column, mobile-first item layout ──── */
+
+.issue-table,
+.oops-table,
+.wins-table,
+.news-table {
+  display: block;
+  margin: 0 0 4px 0;
 }
-.row {
-	display: inline-block;
+
+.issue-table td,
+.oops-table td,
+.wins-table td,
+.news-table td {
+  display: block;
+  width: 100%;
 }
-x
-#pub-date {
-	display: flex;
+
+/* Definition-list reset (inside record cards) */
+
+dl {
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+
+dt.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ── Item titles ───────────────────────────── */
+
+.issue-title,
+.oops-title,
+.wins-title,
+.news-title {
+  font-weight: 700;
+  font-size: 12px;
+  margin: 0 0 2px 0;
+  color: #00313D;
+}
+
+/* ── Customer names ────────────────────────── */
+
+.issue-customer,
+.oops-customer,
+.wins-customer,
+.news-customer {
+  color: #0071CE;
+  font-weight: 500;
+  font-size: 11px;
+  margin: 0 0 4px 0;
+}
+
+/* ── Summaries ─────────────────────────────── */
+
+.issue-summary,
+.oops-summary,
+.wins-summary,
+.news-summary {
+  margin: 0 0 10px 0;
+  line-height: 1.35;
+  font-size: 11px;
+}
+
+/* ── Ticket link ───────────────────────────── */
+
+.ticket-link {
+  font-size: 10px;
+  margin: 0 0 10px 0;
+}
+
+.ticket-link a {
+  color: #0071CE;
+}
+
+/* ── Tablet+ breakpoint ────────────────────── */
+
+@media (min-width: 768px) {
+  .container {
+    padding: 24px 28px;
+  }
+
+  .issue-title,
+  .oops-title,
+  .wins-title,
+  .news-title {
+    font-size: 13px;
+  }
 }

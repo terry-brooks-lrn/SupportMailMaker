@@ -21,7 +21,7 @@ tasks:
   # ---------------------------------------------------------------------------
   start:
     desc: Start the Generator Server on a given port
-    aliases: [serve, run]
+    aliases: [ serve, run ]
     vars:
       PORT: '{{.CLI_ARGS | default .PORT}}'
     env:
@@ -40,7 +40,7 @@ tasks:
   # ---------------------------------------------------------------------------
   test:
     desc: Run the full test suite
-    aliases: [tests]
+    aliases: [ tests ]
     cmds:
       - echo "🧪 Running test suite..."
       - python -m pytest support_mail_maker/tests/ {{.CLI_ARGS}}
@@ -73,7 +73,7 @@ tasks:
 
   fmt:
     desc: Auto-format code with isort and black
-    aliases: [format]
+    aliases: [ format ]
     cmds:
       - echo "🖌️  Formatting code..."
       - python -m isort support_mail_maker/
@@ -92,14 +92,11 @@ tasks:
 
   docker:run:
     desc: Run the application in a Docker container
-    deps: [docker:build]
+    deps: [ docker:build ]
     cmds:
       - echo "🐳 Running {{.IMAGE_NAME}}:{{.IMAGE_TAG}} on port {{.PORT}}..."
       - >-
-        docker run --rm
-        -p {{.PORT}}:7500
-        --name supportmailmaker
-        {{.IMAGE_NAME}}:{{.IMAGE_TAG}}
+        docker run --rm -p {{.PORT}}:7500 --name supportmailmaker {{.IMAGE_NAME}}:{{.IMAGE_TAG}}
 
   docker:stop:
     desc: Stop the running Docker container
@@ -113,10 +110,10 @@ tasks:
   # ---------------------------------------------------------------------------
   clear-logs:
     desc: Clear the main log file
-    aliases: [clean-logs]
+    aliases: [ clean-logs ]
     cmds:
       - echo "🧹 Clearing logs..."
-      - truncate -s 0 logs/main.log
+      - mkdir -p logs && truncate -s 0 logs/main.log
       - echo "✅ Logs cleared."
     status:
       - test ! -f logs/main.log

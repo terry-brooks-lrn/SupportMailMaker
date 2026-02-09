@@ -13,6 +13,98 @@ from gradio_log import Log
 import aiofiles
 import csv
 import io
+
+# ── CSV column-header → internal-key mapping ──────────────────────────────
+# Real-world CSV files arrive with varying header conventions (mixed case,
+# punctuation, abbreviations).  Each internal key maps to a **tuple of
+# accepted aliases** so that any reasonable header variant is recognised.
+# Matching is case-insensitive and strips leading/trailing whitespace.
+CSV_COLUMN_ALIASES: Dict[str, tuple] = {
+    "type": (
+        "section",
+        "type",
+        "ticket_type",
+    ),
+    "topic_domain": (
+        "topic_domain",
+        "topic/domain",
+    ),
+    "title": (
+        "title",
+    ),
+    "customer": (
+        "customer",
+    ),
+    "summary": (
+        "summary",
+        "subject matter/summary",
+    ),
+    "url": (
+        "ticket_link",
+        "link",
+    ),
+    "include": (
+        "add_to_edition",
+        "add_to_edition?",
+        "include",
+    ),
+}
+
+# Pre-compute a fast lookup: lowercased-alias → internal key
+_ALIAS_LOOKUP: Dict[str, str] = {}
+for _internal_key, _aliases in CSV_COLUMN_ALIASES.items():
+    for _alias in _aliases:
+        _ALIAS_LOOKUP[_alias.lower().strip()] = _internal_key
+
+
+# Truthy string values accepted for the ``add_to_edition`` CSV column.
+_TRUTHY_STRINGS = frozenset({"true", "1", "yes", "✅"})
+
+
+def _coerce_bool(value: Any) -> bool:
+    """Convert a CSV cell value to a Python bool.
+
+    Accepts ``True`` / ``False`` booleans as-is, and treats common
+    truthy strings (case-insensitive) — ``"true"``, ``"1"``, ``"yes"``,
+    ``"✅"`` — as ``True``.  Everything else is ``False``.
+    """
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in _TRUTHY_STRINGS
+    return False
+
+
+def normalize_csv_rows(rows: list[dict]) -> list[dict]:
+    """Re-key each CSV row from upload-template headers to internal keys.
+
+    Header matching is **case-insensitive** and supports multiple aliases
+    per internal key (see ``CSV_COLUMN_ALIASES``).  Unmapped columns
+    (e.g. ``owner``, ``notes``, ``client_number``) are silently dropped.
+    The ``include`` field is coerced to a Python ``bool`` so that
+    ``collate_content`` can use ``if item.get("include") is True``.
+
+    Args:
+        rows: A list of dicts produced by ``csv.DictReader``.
+
+    Returns:
+        A new list of dicts with normalised keys.
+    """
+    normalised = []
+    for row in rows:
+        new_row: Dict[str, Any] = {key: "" for key in CSV_COLUMN_ALIASES}
+        for csv_header, value in row.items():
+            if csv_header is None:
+                continue
+            internal_key = _ALIAS_LOOKUP.get(csv_header.lower().strip())
+            if internal_key is not None:
+                new_row[internal_key] = value if value is not None else ""
+        # Coerce include from string → bool
+        new_row["include"] = _coerce_bool(new_row.get("include", ""))
+        normalised.append(new_row)
+    return normalised
+
+
 # Initialize current formatter with the current date
 now = datetime.now().strftime("%Y-%m-%d")
 current_edition = Formatter(publish_date=now)
@@ -135,8 +227,9 @@ async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=g
             # 3) Pass the buffer to csv.DictReader
                 csv_reader = csv.DictReader(data_buffer)
 
-            # 4) Convert the reader to a list of dictionaries
-                content = list(csv_reader)
+            # 4) Convert the reader to a list of dictionaries and normalise
+            #    CSV column headers to the internal keys collate_content expects.
+                content = normalize_csv_rows(list(csv_reader))
                 current_edition.context['publish_date'] = current_edition.publish_date
         else:
             logger.warning("No valid input provided!")

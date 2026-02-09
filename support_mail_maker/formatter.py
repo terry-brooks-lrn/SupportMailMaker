@@ -140,11 +140,24 @@ class Formatter:
     """
     def __init__(self, publish_date: str):
         self.publish_date = datetime.strptime(publish_date, "%Y-%m-%d")
+
+        # Edition month is one calendar month before the publish date.
+        # day=1 avoids overflow (e.g. March 31 → no Feb 31).
+        if self.publish_date.month == 1:
+            edition_month_dt = self.publish_date.replace(
+                year=self.publish_date.year - 1, month=12, day=1
+            )
+        else:
+            edition_month_dt = self.publish_date.replace(
+                month=self.publish_date.month - 1, day=1
+            )
+
         self.html: str = ""
-        self.markdown:str = ""
+        self.markdown: str = ""
         self.content_data: Union[str, Dict[str, Any]] = {}
         self.context: Dict[str, Any] = {
             "publish_date": self.publish_date,
+            "edition_month": edition_month_dt,
             "content": {"issues": [], "oops": [], "wins": [], "news": []},
         }
 
@@ -196,7 +209,7 @@ class Formatter:
         """
         try:
             for item in tqdm(self.content_data):
-                if item.get("include") == "✅":
+                if item.get("include") is True:
                     classed_item = Item(
                         title=item['title'],
                         domain=item['topic_domain'],
@@ -246,6 +259,9 @@ class Formatter:
                         "publish_date": self.context["publish_date"].strftime("%Y-%m-%d")
                         if isinstance(self.context["publish_date"], datetime)
                         else self.context["publish_date"],
+                        "edition_month": self.context["edition_month"].strftime("%Y-%m-%d")
+                        if isinstance(self.context["edition_month"], datetime)
+                        else self.context["edition_month"],
                     }
                     try:
                         is_valid = valid_JSON_input(validation_context)

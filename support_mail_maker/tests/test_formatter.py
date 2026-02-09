@@ -43,6 +43,50 @@ class TestFormatterInit:
             Formatter(publish_date="not-a-date")
 
 
+class TestFormatterEditionMonth:
+    """Tests for edition_month context variable (one month before publish_date)."""
+
+    def test_edition_month_is_previous_month(self):
+        f = Formatter(publish_date="2025-06-15")
+        edition = f.context["edition_month"]
+        assert edition.month == 5
+        assert edition.year == 2025
+
+    def test_edition_month_january_wraps_to_december(self):
+        f = Formatter(publish_date="2025-01-10")
+        edition = f.context["edition_month"]
+        assert edition.month == 12
+        assert edition.year == 2024
+
+    def test_edition_month_february_to_january(self):
+        f = Formatter(publish_date="2026-02-09")
+        edition = f.context["edition_month"]
+        assert edition.month == 1
+        assert edition.year == 2026
+
+    def test_edition_month_december_to_november(self):
+        f = Formatter(publish_date="2025-12-01")
+        edition = f.context["edition_month"]
+        assert edition.month == 11
+        assert edition.year == 2025
+
+    def test_edition_month_is_datetime_instance(self):
+        f = Formatter(publish_date="2025-03-15")
+        assert isinstance(f.context["edition_month"], datetime)
+
+    def test_edition_month_day_overflow_safe(self):
+        """March 31 -> previous month is Feb which has no 31st day.
+        Using day=1 in the implementation prevents ValueError."""
+        f = Formatter(publish_date="2025-03-31")
+        edition = f.context["edition_month"]
+        assert edition.month == 2
+        assert edition.year == 2025
+
+    def test_publish_date_unchanged_after_edition_month_calc(self):
+        f = Formatter(publish_date="2025-06-15")
+        assert f.context["publish_date"] == datetime(2025, 6, 15)
+
+
 class TestFormatterDictAccess:
     def test_getitem_existing_attr(self, formatter):
         assert formatter["html"] == ""
@@ -145,7 +189,7 @@ class TestFormatterCollateContent:
             + len(formatter.get_items("oops"))
             + len(formatter.get_items("news"))
         )
-        # raw_content_data has 5 items but 1 is excluded (❌)
+        # raw_content_data has 5 items but 1 is excluded (include=False)
         assert total_items == 4
 
     async def test_collate_content_empty_data(self, formatter):
@@ -163,7 +207,7 @@ class TestFormatterCollateContent:
                 "customer": "Nobody",
                 "type": "Issue",
                 "url": "",
-                "include": "❌",
+                "include": False,
             }
         ]
         formatter.set_raw_content(data)
@@ -171,8 +215,8 @@ class TestFormatterCollateContent:
         assert result is True
         assert formatter.get_items("issues") == []
 
-    async def test_collate_content_only_includes_checkmark_items(self, formatter):
-        """Only items with include == '✅' should be collated; all other values are excluded."""
+    async def test_collate_content_only_includes_true_items(self, formatter):
+        """Only items with include is True should be collated; all other values are excluded."""
         data = [
             {
                 "title": "Included",
@@ -181,43 +225,43 @@ class TestFormatterCollateContent:
                 "customer": "Acme",
                 "type": "Issue",
                 "url": "",
-                "include": "✅",
+                "include": True,
             },
             {
-                "title": "Excluded X",
+                "title": "Excluded False",
                 "topic_domain": "Auth",
                 "summary": "Should be excluded",
                 "customer": "Beta",
                 "type": "Issue",
                 "url": "",
-                "include": "❌",
+                "include": False,
             },
             {
-                "title": "Excluded Yes",
+                "title": "Excluded None",
                 "topic_domain": "Auth",
-                "summary": "Truthy string but not checkmark",
+                "summary": "None include field",
                 "customer": "Gamma",
                 "type": "Issue",
                 "url": "",
-                "include": "Yes",
+                "include": None,
             },
             {
-                "title": "Excluded True",
+                "title": "Excluded Truthy String",
                 "topic_domain": "Auth",
-                "summary": "Boolean-like string",
+                "summary": "String 'True' is not boolean True",
                 "customer": "Delta",
                 "type": "Issue",
                 "url": "",
                 "include": "True",
             },
             {
-                "title": "Excluded Empty",
+                "title": "Excluded Zero",
                 "topic_domain": "Auth",
-                "summary": "Empty include field",
+                "summary": "Integer 0 is not True",
                 "customer": "Epsilon",
                 "type": "Issue",
                 "url": "",
-                "include": "",
+                "include": 0,
             },
         ]
         formatter.set_raw_content(data)
@@ -295,7 +339,7 @@ class TestFormatterSendToPress:
                 "customer": "Customer",
                 "type": "Issue",
                 "url": "",
-                "include": "✅",
+                "include": True,
             }
         ]
         formatter.set_raw_content(data)
@@ -315,7 +359,7 @@ class TestFormatterSendToPress:
                 "customer": "Customer",
                 "type": "Issue",
                 "url": "",
-                "include": "✅",
+                "include": True,
             }
         ]
         formatter.set_raw_content(data)

@@ -1,271 +1,255 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SupportMail</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-  </head>
+{% extends "support_mail_base.html" %}
 
-  <body>
-    <div class="container">
-      <div class="row">
-        <img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/image-removebg-preview.png" alt="SupportMail Header" class="header-image" />
-        <div id="pub-date">
-          <sub><em>Date Published</em></sub>
-          <p>{{ publish_date | date:"F j, Y" }}</p>
-        </div>
-      </div>
+{% block content %}
 
-      <div class="row">
-        <p>Welcome to the {{ publish_date | date:"F" }} edition of SupportMail. For those of you new to this aggregation, SupportMail is an internal email assembled by the Support team to highlight noteworthy tickets, calls, events, etc., that seem likely to be of interest to a larger audience. Inclusions are for information purposes and are not limited to unsolved issues.</p>
+  {# ── Masthead ──────────────────────────────────────────────── #}
+  <div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/image-removebg-preview.png"
+      alt="SupportMail header"
+      class="header-image"
+    />
+    <p class="publish-date-label">Date published</p>
+    <p class="publish-date-value">{{ publish_date|date:"F j, Y" }}</p>
+  </div>
 
-        <p>
-          If you think any internal party should be added to this distribution list, please send a request and email address to <a href="mailto:rich.shupe@learnosity.com">Rich Shupe</a>.
-        </p>
-      </div>
+  {# ── Introduction ──────────────────────────────────────────── #}
+  <div>
+    <p>
+      Welcome to the {{ edition_month|date:"F" }} edition of SupportMail.
+      For those of you new to this aggregation, SupportMail is an internal
+      email assembled by the Support team to highlight noteworthy tickets,
+      calls, events, etc., that seem likely to be of interest to a larger
+      audience. Inclusions are for information purposes and are not limited
+      to unsolved issues.
+    </p>
 
-      {% comment %}Start - Issues Section{% endcomment %}
-      {% if content.issues %}
-      <div class="row" id="issues">
+    <p>
+      If you think any internal party should be added to this distribution
+      list, please send a request and email address to
+      <a href="mailto:rich.shupe@learnosity.com">Rich Shupe</a>.
+    </p>
+  </div>
 
-        <img
-          src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_issues.png"
-          alt="Issues section header"
-          class="header-image"
-        />
+  {% comment %}Start — Issues section{% endcomment %}
+  {% if content.issues %}
+  <section id="issues">
 
-        <div class="content-section-intro" id="issue-intro">
-          <p class="content-section-intro-text">
-            Here are some of the notable customer issues that have come across our desks recently:
-          </p>
-        </div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_issues.png"
+      alt="Issues section header"
+      class="section-header-image"
+    />
 
-        {# ---- Group issues by topic/domain ---- #}
-        {% regroup content.issues by domain as issues_by_topic %}
+    <p class="content-section-intro-text">
+      Here are some of the notable customer issues that have come across
+      our desks recently:
+    </p>
 
-        {% for topic in issues_by_topic %}
-          <section class="issue-topic-group">
+    {% regroup content.issues by domain as issues_by_topic %}
 
-            <h3 class="issue-topic-title">
-              {{ topic.grouper }}
-            </h3>
+    {% for topic in issues_by_topic %}
+      <section>
+        <h3>{{ topic.grouper }}</h3>
 
-            {% for issue in topic.list %}
-              <table class="issue-table" role="presentation">
-                <tbody>
-                  <tr>
-                    <td>
-                      <dl class="issue-record">
-                        <dt class="sr-only">Title</dt>
-                        <dd class="issue-title">
-                          {{ issue.title }}
-                        </dd>
+        {% for issue in topic.list %}
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">{{ issue.title }}</dd>
 
-                        <dt class="sr-only">Customer</dt>
-                        <dd class="issue-customer">
-                          {{ issue.customer }}
-                        </dd>
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">{{ issue.customer }}</dd>
 
-                        <dt class="sr-only">Summary</dt>
-                        <dd class="issue-summary">
-                          {{ issue.summary }}
-                        </dd>
-                      </dl>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            {% endfor %}
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">{{ issue.summary }}</dd>
 
-          </section>
+                    {% if issue.ticket_url %}
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="{{ issue.ticket_url }}">View ticket</a>
+                    </dd>
+                    {% endif %}
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         {% endfor %}
 
-      </div>
-      {% endif %}
-      {% comment %}End - Issues Section{% endcomment %}
+      </section>
+    {% endfor %}
 
-      {% comment %}Start - Oops Section{% endcomment %}
-      {% if content.oops %}
-      <div class="row" id="oops">
+  </section>
+  {% endif %}
+  {% comment %}End — Issues section{% endcomment %}
 
-        <img
-          src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_oops.png"
-          alt="Oops section header"
-          class="header-image"
-        />
+  {% comment %}Start — Oops section{% endcomment %}
+  {% if content.oops %}
+  <section id="oops">
 
-        <div class="content-section-intro" id="oops-intro">
-          <p class="content-section-intro-text">
-            Here are some recent oops moments worth noting:
-          </p>
-        </div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_oops.png"
+      alt="Oops section header"
+      class="section-header-image"
+    />
 
-        {# ---- Group oops by topic/domain ---- #}
-        {% regroup content.oops by domain as oops_by_topic %}
+    <p class="content-section-intro-text">
+      Here are some recent oops moments worth noting:
+    </p>
 
-        {% for topic in oops_by_topic %}
-          <section class="oops-topic-group">
+    {% regroup content.oops by domain as oops_by_topic %}
 
-            <h3 class="oops-topic-title">
-              {{ topic.grouper }}
-            </h3>
+    {% for topic in oops_by_topic %}
+      <section>
+        <h3>{{ topic.grouper }}</h3>
 
-            {% for oop in topic.list %}
-              <table class="oops-table" role="presentation">
-                <tbody>
-                  <tr>
-                    <td>
-                      <dl class="oops-record">
-                        <dt class="sr-only">Title</dt>
-                        <dd class="oops-title">
-                          {{ oop.title }}
-                        </dd>
+        {% for oop in topic.list %}
+          <table class="oops-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="oops-title">{{ oop.title }}</dd>
 
-                        <dt class="sr-only">Customer</dt>
-                        <dd class="oops-customer">
-                          {{ oop.customer }}
-                        </dd>
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="oops-customer">{{ oop.customer }}</dd>
 
-                        <dt class="sr-only">Summary</dt>
-                        <dd class="oops-summary">
-                          {{ oop.summary }}
-                        </dd>
-                      </dl>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            {% endfor %}
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="oops-summary">{{ oop.summary }}</dd>
 
-          </section>
+                    {% if oop.ticket_url %}
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="{{ oop.ticket_url }}">View ticket</a>
+                    </dd>
+                    {% endif %}
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         {% endfor %}
 
-      </div>
-      {% endif %}
-      {% comment %}End - Oops Section{% endcomment %}
+      </section>
+    {% endfor %}
 
-      {% comment %}Start - Wins Section{% endcomment %}
-      {% if content.wins %}
-      <div class="row" id="wins">
+  </section>
+  {% endif %}
+  {% comment %}End — Oops section{% endcomment %}
 
-        <img
-          src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_wins.png"
-          alt="Wins section header"
-          class="header-image"
-        />
+  {% comment %}Start — Wins section{% endcomment %}
+  {% if content.wins %}
+  <section id="wins">
 
-        <div class="content-section-intro" id="wins-intro">
-          <p class="content-section-intro-text">
-            Here are some recent wins worth celebrating:
-          </p>
-        </div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_wins.png"
+      alt="Wins section header"
+      class="section-header-image"
+    />
 
-        {# ---- Group wins by topic/domain ---- #}
-        {% regroup content.wins by domain as wins_by_topic %}
+    <p class="content-section-intro-text">
+      Here are some recent wins worth celebrating:
+    </p>
 
-        {% for topic in wins_by_topic %}
-          <section class="wins-topic-group">
+    {% regroup content.wins by domain as wins_by_topic %}
 
-            <h3 class="wins-topic-title">
-              {{ topic.grouper }}
-            </h3>
+    {% for topic in wins_by_topic %}
+      <section>
+        <h3>{{ topic.grouper }}</h3>
 
-            {% for win in topic.list %}
-              <table class="wins-table" role="presentation">
-                <tbody>
-                  <tr>
-                    <td>
-                      <dl class="wins-record">
-                        <dt class="sr-only">Title</dt>
-                        <dd class="wins-title">
-                          {{ win.title }}
-                        </dd>
+        {% for win in topic.list %}
+          <table class="wins-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="wins-title">{{ win.title }}</dd>
 
-                        <dt class="sr-only">Customer</dt>
-                        <dd class="wins-customer">
-                          {{ win.customer }}
-                        </dd>
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="wins-customer">{{ win.customer }}</dd>
 
-                        <dt class="sr-only">Summary</dt>
-                        <dd class="wins-summary">
-                          {{ win.summary }}
-                        </dd>
-                      </dl>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            {% endfor %}
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="wins-summary">{{ win.summary }}</dd>
 
-          </section>
+                    {% if win.ticket_url %}
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="{{ win.ticket_url }}">View ticket</a>
+                    </dd>
+                    {% endif %}
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         {% endfor %}
 
-      </div>
-      {% endif %}
-      {% comment %}End - Wins Section{% endcomment %}
+      </section>
+    {% endfor %}
 
-      {% comment %}Start - News Section{% endcomment %}
-      {% if content.news %}
-      <div class="row" id="news">
+  </section>
+  {% endif %}
+  {% comment %}End — Wins section{% endcomment %}
 
-        <img
-          src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/news_header.png"
-          alt="News section header"
-          class="header-image"
-        />
+  {% comment %}Start — News section{% endcomment %}
+  {% if content.news %}
+  <section id="news">
 
-        <div class="content-section-intro" id="news-intro">
-          <p class="content-section-intro-text">
-            Here is some recent news worth sharing:
-          </p>
-        </div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/news_header.png"
+      alt="News section header"
+      class="section-header-image"
+    />
 
-        {# ---- Group news by topic/domain ---- #}
-        {% regroup content.news by domain as news_by_topic %}
+    <p class="content-section-intro-text">
+      Here is some recent news worth sharing:
+    </p>
 
-        {% for topic in news_by_topic %}
-          <section class="news-topic-group">
+    {% regroup content.news by domain as news_by_topic %}
 
-            <h3 class="news-topic-title">
-              {{ topic.grouper }}
-            </h3>
+    {% for topic in news_by_topic %}
+      <section>
+        <h3>{{ topic.grouper }}</h3>
 
-            {% for news_item in topic.list %}
-              <table class="news-table" role="presentation">
-                <tbody>
-                  <tr>
-                    <td>
-                      <dl class="news-record">
-                        <dt class="sr-only">Title</dt>
-                        <dd class="news-title">
-                          {{ news_item.title }}
-                        </dd>
+        {% for news_item in topic.list %}
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">{{ news_item.title }}</dd>
 
-                        <dt class="sr-only">Customer</dt>
-                        <dd class="news-customer">
-                          {{ news_item.customer }}
-                        </dd>
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">{{ news_item.customer }}</dd>
 
-                        <dt class="sr-only">Summary</dt>
-                        <dd class="news-summary">
-                          {{ news_item.summary }}
-                        </dd>
-                      </dl>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            {% endfor %}
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">{{ news_item.summary }}</dd>
 
-          </section>
+                    {% if news_item.ticket_url %}
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="{{ news_item.ticket_url }}">View ticket</a>
+                    </dd>
+                    {% endif %}
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         {% endfor %}
 
-      </div>
-      {% endif %}
-      {% comment %}End - News Section{% endcomment %}
+      </section>
+    {% endfor %}
 
-    </div>
-  </body>
-</html>
+  </section>
+  {% endif %}
+  {% comment %}End — News section{% endcomment %}
+
+{% endblock %}
