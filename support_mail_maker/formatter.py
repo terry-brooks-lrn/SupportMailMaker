@@ -247,8 +247,13 @@ class Formatter:
                         if isinstance(self.context["publish_date"], datetime)
                         else self.context["publish_date"],
                     }
-                    if valid_JSON_input(validation_context):
-                        # 4) Instead of self.publish(), use your async publish_async
+                    try:
+                        is_valid = valid_JSON_input(validation_context)
+                    except ValidationError as exc:
+                        logger.warning("Validation failed for publish context: %s", str(exc))
+                        return False
+
+                    if is_valid:
                         await self.publish_async()
                         return True
                     else:
