@@ -9,9 +9,10 @@ class TestFormatterInit:
         f = Formatter(publish_date="2025-06-15")
         assert f.publish_date == datetime(2025, 6, 15)
 
-    def test_publish_date_formatted_in_context(self):
+    def test_publish_date_is_datetime_in_context(self):
         f = Formatter(publish_date="2025-03-15")
-        assert f.context["publish_date"] == "03/15/2025"
+        assert f.context["publish_date"] == datetime(2025, 3, 15)
+        assert isinstance(f.context["publish_date"], datetime)
 
     def test_context_has_empty_content_lists(self):
         f = Formatter(publish_date="2025-01-01")
@@ -170,6 +171,77 @@ class TestFormatterCollateContent:
         assert result is True
         assert formatter.get_items("issues") == []
 
+    async def test_collate_content_only_includes_checkmark_items(self, formatter):
+        """Only items with include == '✅' should be collated; all other values are excluded."""
+        data = [
+            {
+                "title": "Included",
+                "topic_domain": "Auth",
+                "summary": "Should be included",
+                "customer": "Acme",
+                "type": "Issue",
+                "url": "",
+                "include": "✅",
+            },
+            {
+                "title": "Excluded X",
+                "topic_domain": "Auth",
+                "summary": "Should be excluded",
+                "customer": "Beta",
+                "type": "Issue",
+                "url": "",
+                "include": "❌",
+            },
+            {
+                "title": "Excluded Yes",
+                "topic_domain": "Auth",
+                "summary": "Truthy string but not checkmark",
+                "customer": "Gamma",
+                "type": "Issue",
+                "url": "",
+                "include": "Yes",
+            },
+            {
+                "title": "Excluded True",
+                "topic_domain": "Auth",
+                "summary": "Boolean-like string",
+                "customer": "Delta",
+                "type": "Issue",
+                "url": "",
+                "include": "True",
+            },
+            {
+                "title": "Excluded Empty",
+                "topic_domain": "Auth",
+                "summary": "Empty include field",
+                "customer": "Epsilon",
+                "type": "Issue",
+                "url": "",
+                "include": "",
+            },
+        ]
+        formatter.set_raw_content(data)
+        await formatter.collate_content()
+        assert len(formatter.get_items("issues")) == 1
+        assert formatter.get_items("issues")[0]["title"] == "Included"
+
+    async def test_collate_content_missing_include_key_is_excluded(self, formatter):
+        """Items without an 'include' key should be excluded."""
+        data = [
+            {
+                "title": "No include key",
+                "topic_domain": "Auth",
+                "summary": "Missing include field entirely",
+                "customer": "Acme",
+                "type": "Issue",
+                "url": "",
+            },
+        ]
+        formatter.set_raw_content(data)
+        result = await formatter.collate_content()
+        assert result is True
+        assert formatter.get_items("issues") == []
+
 
 class TestFormatterSaveToFile:
     async def test_save_to_file_html(self, formatter, tmp_path):
@@ -228,8 +300,28 @@ class TestFormatterSendToPress:
         ]
         formatter.set_raw_content(data)
 
-        # Mock valid_JSON_input to raise ValidationError
-        from jsonschema import ValidationError
-        with patch("formatter.valid_JSON_input", side_effect=ValidationError("invalid")):
+        # Mock valid_JSON_input to return False (validation failure)
+        with patch("formatter.valid_JSON_input", return_value=False):
             result = await formatter.send_to_press_async()
             assert result is False
+
+    async def test_send_to_press_does_not_publish_on_validation_failure(self, formatter):
+        formatter.context["publish_date"] = "2025-03-15"
+        data = [
+            {
+                "title": "Test",
+                "topic_domain": "General",
+                "summary": "Summary",
+                "customer": "Customer",
+                "type": "Issue",
+                "url": "",
+                "include": "✅",
+            }
+        ]
+        formatter.set_raw_content(data)
+
+        with patch("formatter.valid_JSON_input", return_value=False), \
+             patch.object(formatter, "publish_async", new_callable=AsyncMock) as mock_publish:
+            result = await formatter.send_to_press_async()
+            assert result is False
+            mock_publish.assert_not_awaited()

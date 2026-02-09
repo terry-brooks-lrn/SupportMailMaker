@@ -144,7 +144,7 @@ class Formatter:
         self.markdown:str = ""
         self.content_data: Union[str, Dict[str, Any]] = {}
         self.context: Dict[str, Any] = {
-            "publish_date": self.publish_date.strftime('%m/%d/%Y'),
+            "publish_date": self.publish_date,
             "content": {"issues": [], "oops": [], "wins": [], "news": []},
         }
 
@@ -196,8 +196,7 @@ class Formatter:
         """
         try:
             for item in tqdm(self.content_data):
-                include_in_edition = bool(item.get("include", False))
-                if include_in_edition:
+                if item.get("include") == "✅":
                     classed_item = Item(
                         title=item['title'],
                         domain=item['topic_domain'],
@@ -241,14 +240,19 @@ class Formatter:
                 # 2) Properly await collate_content()
                 collate_ok = await self.collate_content()
                 if collate_ok:
-                    try:
-                        # 3) Validate the context JSON
-                        valid_JSON_input(self.context)
+                    # 3) Validate the context JSON (serialize datetime for schema)
+                    validation_context = {
+                        **self.context,
+                        "publish_date": self.context["publish_date"].strftime("%Y-%m-%d")
+                        if isinstance(self.context["publish_date"], datetime)
+                        else self.context["publish_date"],
+                    }
+                    if valid_JSON_input(validation_context):
                         # 4) Instead of self.publish(), use your async publish_async
                         await self.publish_async()
                         return True
-                    except ValidationError as ve:
-                        logger.error(f"Unable to Publish Due to Validation Failure: {str(ve)}")
+                    else:
+                        logger.error("Unable to Publish Due to Validation Failure")
                         return False
             return False
         except Exception as e:

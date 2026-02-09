@@ -121,7 +121,7 @@ async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=g
     try:
         if json_input and json_input != PLACEHOLDER_JSON:
             file_input = None
-            current_edition.context['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
+            current_edition.context['publish_date'] = current_edition.publish_date
             content = json_input
         elif file_input is not None:
             json_input = None
@@ -137,7 +137,7 @@ async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=g
 
             # 4) Convert the reader to a list of dictionaries
                 content = list(csv_reader)
-                current_edition.context['publish_date'] = current_edition.publish_date.strftime("%Y-%m-%d")
+                current_edition.context['publish_date'] = current_edition.publish_date
         else:
             logger.warning("No valid input provided!")
             return None
