@@ -223,6 +223,46 @@
           font-size: 13px;
         }
       }
+      .viz-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 18px 0 22px;
+  }
+
+.viz-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 420px; /* keeps charts readable but not overwhelming */
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
+  }
+
+@media (max-width: 640px) {
+  .viz-image {
+    max-height: 300px;
+  }
+}
+/* =============================================
+   Normalize section widths (fix Trends breakout)
+   ============================================= */
+
+section#trends > section {
+  max-width: 680px;      /* match .container */
+  margin: 0 auto;
+  padding: 0;            /* remove internal padding inflation */
+}
+section#trends article {
+  margin-bottom: 20px;
+}
+section#trends {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 49, 61, 0.02),
+    transparent 120px
+  );
+}
     </style>
   </head>
   <body>
@@ -237,7 +277,7 @@
       class="header-image"
     />
     <p class="publish-date-label">Date published</p>
-    <p class="publish-date-value">February 9, 2026</p>
+    <p class="publish-date-value">February 10, 2026</p>
   </div>
 
   
@@ -265,7 +305,226 @@
     <p class="content-section-intro-text">
       Here are some of the trends we've noticed in the past month:
     </p>
-    <h1> Trends Stuff</h1>
+    <section style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji','Segoe UI Emoji'; 
+                max-width: 980px; margin: 0 auto; padding: 28px; color: #0f172a; line-height: 1.45;">
+	<header style="margin-bottom: 18px;">
+		<div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+
+		</div>
+		</div>
+	</header>
+
+	<!-- Grid of 5 insights -->
+	<div style="display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px;">
+
+		<!-- Insight 1 -->
+		<article style="grid-column: span 12; border:1px solid #e2e8f0; border-radius:18px; padding:18px; 
+                    background: radial-gradient(1200px 300px at 30% 0%, rgba(206,14,45,.10), transparent 60%), #ffffff;
+                    box-shadow: 0 10px 28px rgba(2,6,23,.06);">
+			<div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+				<div style="min-width: 220px;">
+					<div style="display:inline-flex; align-items:center; gap:10px;">
+						<span style="display:inline-flex; width:34px; height:34px; border-radius:12px; background:#CE0E2D; 
+                         align-items:center; justify-content:center; color:white; font-weight:700;">1</span>
+						<h2 style="margin:0; font-size:16px;">Support demand tracks product depth, not customer confusion</h2>
+					</div>
+					<p style="margin:10px 0 0; color:#334155; font-size:13.5px;">
+						The biggest drivers across charts are <strong>platform limitations</strong>, <strong>product investigations</strong>, and <strong>platform incidents/performance</strong>.
+					</p>
+				</div>
+				<div class="viz-container">
+					<img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/Tickets%20by%20Topic%20Domain.png" alt="Tickets by Topic Domain Treemap" class="viz-image">
+				</div>
+				<div style="flex:1; min-width: 260px; display:flex; gap:10px; flex-wrap:wrap; align-content:flex-start;">
+					<div style="flex:1; min-width: 240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+						<div style="font-size:12px; color:#64748b; font-weight:600; margin-bottom:6px;">Evidence across viz</div>
+						<ul style="margin:0; padding-left: 18px; color:#0f172a; font-size:13px;">
+							<li>Topic-domain treemap dominated by platform/product categories</li>
+							<li>Strategic + Stable cells remain high in lifecycle heatmap</li>
+							<li>Emerging tier produces high raw volume but not the only high-impact segment</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="margin-top:12px; padding:12px; border-left:4px solid #00313D; background:#f1f5f9; border-radius:12px;">
+				<strong style="color:#00313D;">Notable conclusion:</strong>
+				<span style="color:#0f172a;">
+					Support load rises as customers succeed and scale. This is a product surface-area + maturity signal, not a “read the docs” problem.
+				</span>
+			</div>
+		</article>
+
+		<!-- Insight 2 -->
+		<article style="grid-column: span 12; border:1px solid #e2e8f0; border-radius:18px; padding:18px; background:#ffffff;
+                    box-shadow: 0 10px 28px rgba(2,6,23,.06);">
+			<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+				<span style="display:inline-flex; width:34px; height:34px; border-radius:12px; background:#FFCB00; 
+                     align-items:center; justify-content:center; color:#0f172a; font-weight:800;">2</span>
+				<div style="flex:1; min-width: 260px;">
+					<h2 style="margin:0; font-size:16px;">“Stable” and “Strategic” are high-demand and high-stakes</h2>
+					<p style="margin:10px 0 0; color:#334155; font-size:13.5px;">
+						Stable does <em>not</em> mean low effort. Strategic accounts generate fewer tickets than Emerging, but the issues tend to be more consequential.
+					</p>
+					<div class="viz-container">
+						<img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/Tier%20by%20Lifexcycle.png" alt="Account Tier by Lifecycle Stage Heatmap" class="viz-image">
+					</div>
+					<div style="display:grid; grid-template-columns: repeat(12,1fr); gap:10px; margin-top:12px;">
+						<div style="grid-column: span 6; min-width:240px; background:#fff7ed; border:1px solid #fed7aa; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#9a3412; font-weight:700; margin-bottom:6px;">Risk pattern</div>
+							<div style="font-size:13px; color:#0f172a;">
+								A single incident or performance hit can outweigh months of normal operations for strategic customers.
+							</div>
+						</div>
+						<div style="grid-column: span 6; min-width:240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Operational reality</div>
+							<div style="font-size:13px; color:#0f172a;">
+								High-value customers are “stable” because Support is effective, not because they require less support.
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-top:12px; padding:12px; border-left:4px solid #FFCB00; background:#fffbeb; border-radius:12px;">
+						<strong>Notable conclusion:</strong>
+						<span>
+							Retention exposure is driven by <strong>severity + uncertainty</strong>, not raw ticket counts.
+						</span>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<!-- Insight 3 -->
+		<article style="grid-column: span 12; border:1px solid #e2e8f0; border-radius:18px; padding:18px; background:#ffffff;
+                    box-shadow: 0 10px 28px rgba(2,6,23,.06);">
+			<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+				<span style="display:inline-flex; width:34px; height:34px; border-radius:12px; background:#00313D; 
+                     align-items:center; justify-content:center; color:white; font-weight:800;">3</span>
+				<div style="flex:1; min-width: 260px;">
+					<h2 style="margin:0; font-size:16px;">Product Investigation is the strongest early-warning signal</h2>
+					<p style="margin:10px 0 0; color:#334155; font-size:13.5px;">
+						It appears prominently in the topic treemap and repeats in renewal-risk accounts. That combination is a giant blinking sign.
+					</p>
+					<div class="viz-container">
+						<img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/Renewal_risk.png" alt="Renewal Risk Account Ticket Breakdown" class="viz-image">
+					</div>
+					<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+						<div style="flex:1; min-width: 260px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#1d4ed8; font-weight:700; margin-bottom:6px;">Why it matters</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Customers tolerate bugs better than “we don’t know why this happens.” Ambiguity erodes confidence fast.
+							</div>
+						</div>
+						<div style="flex:1; min-width: 260px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Practical interpretation</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Treat Product Investigation tickets as <strong>churn predictors + roadmap inputs</strong>, not routine support work.
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-top:12px; padding:12px; border-left:4px solid #00313D; background:#f1f5f9; border-radius:12px;">
+						<strong style="color:#00313D;">Notable conclusion:</strong>
+						<span style="color:#0f172a;">
+							A “Product Investigation” label is a signal that product intent, observability, or constraints are unclear to the customer.
+						</span>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<!-- Insight 4 -->
+		<article style="grid-column: span 12; border:1px solid #e2e8f0; border-radius:18px; padding:18px; background:#ffffff;
+                    box-shadow: 0 10px 28px rgba(2,6,23,.06);">
+			<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+				<span style="display:inline-flex; width:34px; height:34px; border-radius:12px; background:#EB3C3F; 
+                     align-items:center; justify-content:center; color:white; font-weight:800;">4</span>
+				<div style="flex:1; min-width: 260px;">
+					<h2 style="margin:0; font-size:16px;">Markets have different problem “signatures”</h2>
+					<p style="margin:10px 0 0; color:#334155; font-size:13.5px;">
+						The Market × Topic composition shows issue mixes vary heavily by market. Same platform, different pain.
+					</p>
+					<div class="viz-container">
+						<img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/Market%20by%20Topic.png" alt="Market by Topic Distribution" class="viz-image">
+					</div>
+					<div style="display:grid; grid-template-columns: repeat(12,1fr); gap:10px; margin-top:12px;">
+						<div style="grid-column: span 6; min-width:240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">K-12 pattern</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Fragmented mix: environment variability, browsers/devices, delivery constraints, configuration churn.
+							</div>
+						</div>
+						<div style="grid-column: span 6; min-width:240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Corporate/Workforce pattern</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Reliability and scale: performance, compatibility, operational expectations, integration friction.
+							</div>
+						</div>
+						<div style="grid-column: span 6; min-width:240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Higher Ed pattern</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Assessment correctness: integrity, behavior precision, edge-case logic, grading/handling nuance.
+							</div>
+						</div>
+						<div style="grid-column: span 6; min-width:240px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Adult/Vocational pattern</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Hybrid mix: classroom-style assessment needs plus production-style operational requirements.
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-top:12px; padding:12px; border-left:4px solid #EB3C3F; background:#fff1f2; border-radius:12px;">
+						<strong style="color:#9f1239;">Notable conclusion:</strong>
+						<span style="color:#0f172a;">
+							Market-aware product strategy and support specialization will outperform generalist approaches.
+						</span>
+					</div>
+				</div>
+			</div>
+		</article>
+
+		<!-- Insight 5 -->
+		<article style="grid-column: span 12; border:1px solid #e2e8f0; border-radius:18px; padding:18px; background:#ffffff;
+                    box-shadow: 0 10px 28px rgba(2,6,23,.06);">
+			<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;">
+				<span style="display:inline-flex; width:34px; height:34px; border-radius:12px; background:#10b981; 
+                     align-items:center; justify-content:center; color:white; font-weight:800;">5</span>
+				<div style="flex:1; min-width: 260px;">
+					<h2 style="margin:0; font-size:16px;">Ticket volume is a misleading success metric</h2>
+					<p style="margin:10px 0 0; color:#334155; font-size:13.5px;">
+						Emerging drives volume; Strategic drives impact; Independent is quiet (which could mean healthy… or disengaged).
+					</p>
+					<div class="viz-container">
+						<img src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/ticket_cnt_by_tier.png" alt="Ticket Count by Account Tier" class="viz-image">
+					</div>
+					<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+						<div style="flex:1; min-width: 260px; background:#ecfdf5; border:1px solid #bbf7d0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#047857; font-weight:700; margin-bottom:6px;">Better measurement lens</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Track: severity mix, Product Investigation rates, incident exposure, renewal watchlist triggers, time-to-confidence.
+							</div>
+						</div>
+						<div style="flex:1; min-width: 260px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:12px;">
+							<div style="font-size:12px; color:#64748b; font-weight:700; margin-bottom:6px;">Why this matters</div>
+							<div style="font-size:13px; color:#0f172a;">
+								Low volume can hide churn risk; high volume can reflect high adoption. Context beats counts.
+							</div>
+						</div>
+					</div>
+
+					<div style="margin-top:12px; padding:12px; border-left:4px solid #10b981; background:#f0fdf4; border-radius:12px;">
+						<strong style="color:#047857;">Notable conclusion:</strong>
+						<span style="color:#0f172a;">
+							Measure Support by risk reduction and confidence restoration, not by deflection or raw ticket suppression.
+						</span>
+					</div>
+				</div>
+			</div>
+		</article>
+
+	</div>
+
+</section>
   </section>
   
   

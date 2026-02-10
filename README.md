@@ -10,6 +10,8 @@ SupportMailMaker is an intelligent parser and formatter designed specifically fo
 3. [Installation](#installation)
 4. [Task Commands](#task-commands)
 5. [Usage](#usage)
+   - [Gradio Web Interface](#gradio-web-interface)
+   - [CLI](#cli)
 6. [Testing](#testing)
 7. [Docker Support](#docker-support)
 8. [Contributing](#contributing)
@@ -23,9 +25,10 @@ SupportMailMaker is an intelligent parser and formatter designed specifically fo
 
 - **Efficient Parsing:** Automatically extracts and formats key details from Learnosity SupportMail.
 - **Customizable Templates:** Allows you to define and use email templates tailored to your workflow.
-- **Gradio UI Integration:** Provides a user-friendly interface for parsing and formatting operations.
+- **Gradio UI Integration:** Provides a user-friendly web interface for parsing and formatting operations.
+- **Typer CLI:** A full-featured command-line interface built with Typer and Rich for headless/scriptable workflows — supports JSON, CSV, trends HTML, and markdown output with branded terminal styling.
 - **Dockerized Deployment:** Includes a Docker setup for seamless deployment in any environment.
-- **Taskfile Automation:** All common workflows (server, tests, Docker, linting) managed through a single `Taskfile.yml`.
+- **Taskfile Automation:** All common workflows (server, CLI, tests, Docker, linting) managed through a single `Taskfile.yml`.
 
 ---
 
@@ -82,6 +85,18 @@ All project workflows are managed through [Taskfile](https://taskfile.dev). Run 
 
 > **Aliases:** `task serve`, `task run`
 
+### CLI
+
+| Command | Description |
+|---|---|
+| `task cli -- publish --csv data.csv` | Format a CSV file into SupportMail HTML |
+| `task cli -- publish --json-file content.json` | Format a JSON file |
+| `task cli -- publish --csv data.csv --markdown` | Include Markdown output alongside HTML |
+| `task cli -- template` | Export the CSV upload template |
+| `task cli -- schema` | Print the JSON validation schema |
+
+> **Alias:** `task publish`
+
 ### Testing
 
 | Command | Description |
@@ -124,7 +139,7 @@ All project workflows are managed through [Taskfile](https://taskfile.dev). Run 
 
 ## Usage
 
-### Gradio Interface
+### Gradio Web Interface
 
 Start the application and open the provided URL in your browser:
 
@@ -135,8 +150,63 @@ task start
 The Gradio web interface will be available at `http://localhost:7500`. From there you can:
 
 1. Paste JSON content into the JSON field **or** upload a CSV file via the file upload field. _(These are mutually exclusive.)_
-2. Press **Send To Presses** to format the content into SupportMail format.
-3. Download the generated HTML and Markdown files.
+2. Optionally paste HTML into the Trends section.
+3. Press **Send To Presses** to format the content into SupportMail format.
+4. Download the generated HTML and Markdown files.
+
+### CLI
+
+The CLI provides identical functionality to the web interface, designed for headless environments, scripting, and CI/CD pipelines.
+
+```bash
+# Run directly
+python support_mail_maker/cli.py publish --csv data.csv --date 2026-02-10 --markdown
+
+# Or via Taskfile
+task cli -- publish --csv data.csv --date 2026-02-10 --markdown
+```
+
+#### Commands
+
+| Command | Description |
+|---|---|
+| `publish` | Format support content into branded HTML & Markdown |
+| `serve` | Launch the Gradio web UI |
+| `template` | Export the CSV upload template |
+| `schema` | Print the JSON validation schema |
+
+#### `publish` Options
+
+| Option | Short | Description |
+|---|---|---|
+| `--json` | `-j` | Inline JSON string with content payload |
+| `--json-file` | `-J` | Path to a JSON file containing the content payload |
+| `--csv` | `-c` | Path to a CSV file with support mail items |
+| `--trends` | `-t` | Inline HTML string for the Trends section |
+| `--trends-file` | `-T` | Path to an HTML file for the Trends section |
+| `--markdown` | `-m` | Include a Markdown (.md) file alongside HTML |
+| `--date` | `-d` | Publish date in YYYY-MM-DD format (defaults to today) |
+
+> **Note:** `--json`, `--json-file`, and `--csv` are mutually exclusive — provide exactly one.
+
+#### Examples
+
+```bash
+# Format from CSV with markdown output
+python support_mail_maker/cli.py publish --csv data.csv --markdown
+
+# Format from a JSON file with a custom publish date
+python support_mail_maker/cli.py publish --json-file content.json --date 2026-03-01
+
+# Include trends from an HTML file
+python support_mail_maker/cli.py publish --csv data.csv --trends-file trends.html
+
+# Export the CSV template to see expected columns
+python support_mail_maker/cli.py template --output my_template.csv
+
+# View the content validation schema
+python support_mail_maker/cli.py schema
+```
 
 ---
 
@@ -230,8 +300,8 @@ Access the Gradio interface at `http://localhost:7500`.
 
 ## Roadmap
 
-- Full CLI with Go's CLI Library Cobra
-- Add ability to upload a template
+- ~~Full CLI~~ — Shipped via Typer + Rich
+- ~~Add ability to upload a template~~ — Available via `cli.py template`
 
 ---
 
@@ -270,6 +340,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Acknowledgments
 
 - **Learnosity:** For providing the inspiration and use case for this project.
-- **Gradio:** For the powerful UI framework.
+- **Gradio:** For the powerful web UI framework.
+- **Typer & Rich:** For the stylish CLI experience.
 
 Feel free to open an issue or contact us if you have questions or feedback!

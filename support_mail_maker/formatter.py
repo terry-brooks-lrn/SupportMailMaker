@@ -5,7 +5,11 @@ import csv
 import pathlib
 import json
 import os
-import gradio as gr
+try:
+    import gradio as gr
+    _HAS_GRADIO = True
+except ImportError:
+    _HAS_GRADIO = False
 from jsonschema import ValidationError
 from utils import valid_JSON_input
 from tqdm import tqdm
@@ -352,18 +356,22 @@ class Formatter:
 
             logger.success("HTML & Markdown Files Generated. Please Download them below ⬇️")
 
-            # 2) Return Gradio components referencing the saved files
-            return [
-                gr.File(value=[html_path, markdown_path], visible=True),
-                gr.File(visible=False),
-                gr.Textbox(visible=False)
-            ]
+            # 2) Return result — Gradio components when available, plain paths otherwise
+            if _HAS_GRADIO:
+                return [
+                    gr.File(value=[html_path, markdown_path], visible=True),
+                    gr.File(visible=False),
+                    gr.Textbox(visible=False)
+                ]
+            return [html_path, markdown_path]
 
         except Exception as e:
             logger.error(f"Publishing failed: {e}")
-            return [
-                gr.File(visible=False),
-                gr.File(visible=False),
-                gr.Textbox(
-                    value="Invalid Content File Uploaded. Resetting Press..."
-                )]
+            if _HAS_GRADIO:
+                return [
+                    gr.File(visible=False),
+                    gr.File(visible=False),
+                    gr.Textbox(
+                        value="Invalid Content File Uploaded. Resetting Press..."
+                    )]
+            return []

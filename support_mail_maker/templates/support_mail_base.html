@@ -223,6 +223,51 @@
           font-size: 13px;
         }
       }
+      .viz-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 18px 0 22px;
+  }
+
+.viz-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 420px; /* keeps charts readable but not overwhelming */
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.12);
+  }
+
+@media (max-width: 640px) {
+  .viz-image {
+    max-height: 300px;
+  }
+}
+/* =============================================
+   Normalize section widths (fix Trends breakout)
+   ============================================= */
+
+section#trends > section {
+  max-width: 680px;      /* match .container */
+  margin: 0 auto;
+  padding: 0;            /* remove internal padding inflation */
+}
+section#trends article {
+  margin-bottom: 20px;
+}
+section#trends {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 49, 61, 0.02),
+    transparent 120px
+  );
+}
+.trends-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0;
+}
     </style>
   </head>
   <body>

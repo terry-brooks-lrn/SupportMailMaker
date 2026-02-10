@@ -36,6 +36,17 @@ tasks:
       - python support_mail_maker/app.py
 
   # ---------------------------------------------------------------------------
+  #  CLI
+  # ---------------------------------------------------------------------------
+  cli:
+    desc: Run the SupportMail CLI (pass arguments after --)
+    aliases: [ publish ]
+    env:
+      SUPPORTMAIL_HTML_TEMPLATE: '{{.SUPPORTMAIL_HTML_TEMPLATE | default "./support_mail_maker/templates"}}'
+    cmds:
+      - python support_mail_maker/cli.py {{.CLI_ARGS}}
+
+  # ---------------------------------------------------------------------------
   #  Testing
   # ---------------------------------------------------------------------------
   test:
