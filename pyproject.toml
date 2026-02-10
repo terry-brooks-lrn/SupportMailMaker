@@ -9,13 +9,13 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = "^5.1.4"
+Django = "^5.1.15"
 invoke = "^2.2.0"
-gradio = "^5.5.0"
+gradio = "^5.31.0"
 loguru = "^0.7.2"
 pytest = "^8.3.3"
 jsonschema = {extras = ["format"], version = "^4.23.0"}
-markdownify = "^0.13.1"
+markdownify = "^0.14.1"
 gradio-log = "^0.0.7"
 
 [tool.poetry.group.dev.dependencies]
