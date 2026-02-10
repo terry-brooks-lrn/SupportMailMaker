@@ -21,6 +21,11 @@ gradio-log = "^0.0.7"
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
 black = "^24.10.0"
+pytest-asyncio = "^0.23.0"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["support_mail_maker"]
 
 [build-system]
 requires = ["poetry-core"]

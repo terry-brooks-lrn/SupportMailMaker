@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://learnosity.b-cdn.net/schema/support_mail.schema.json",
+    "$id": "https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/support_mail.schema.json",
     "title": "Support Mail Content",
     "description": "Schema for support mail content",
     "type": "object",

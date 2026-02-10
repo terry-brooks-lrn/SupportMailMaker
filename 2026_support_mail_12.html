@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SupportMail</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+    />
+    <style>
+      /* =============================================
+         SupportMail — Learnosity brand stylesheet
+         =============================================
+         Brand palette
+           Midnight : #00313D
+           Cobalt   : #0071CE
+           Ruby     : #CE0E2D
+           Scarlet  : #EB3C3F
+           Honey    : #FFCB00
+           White    : #FFFFFF
+
+         Typography
+           Primary  : "Gilroy" (Bold 700, Medium 500)
+           Fallback : "Montserrat", Arial, sans-serif
+           Min size : 11px digital
+           Headline leading : 110%  (line-height 1.1)
+           Body copy leading: 125%  (line-height 1.25)
+           Colour   : Midnight or White; headlines may
+                      use a single secondary colour
+           Always sentence case, left-aligned
+         ============================================= */
+
+      body {
+        background-color: #f3f3f3;
+        color: #00313D;
+        font-family: "Gilroy", "Montserrat", Arial, sans-serif;
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 1.25;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 20px 16px;
+        background-color: #FFFFFF;
+      }
+
+      .header-image {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 0 12px 0;
+      }
+
+      .footer-image {
+        max-width: 220px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin: 0 0 12px 0;
+      }
+
+      h2 {
+        color: #00313D;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        margin: 24px 0 8px 0;
+      }
+
+      h3 {
+        color: #00313D;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        margin: 16px 0 6px 0;
+      }
+
+      .topic-group {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-size: 12px;
+        color: #0071CE;
+      }
+
+      p {
+        margin: 0 0 12px 0;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.25;
+      }
+
+      a {
+        color: #0071CE;
+        text-decoration: underline;
+      }
+
+      .publish-date-label {
+        font-size: 10px;
+        font-weight: 500;
+        font-style: italic;
+        color: #00313D;
+        margin: 0 0 2px 0;
+      }
+
+      .publish-date-value {
+        font-size: 13px;
+        font-weight: 700;
+        color: #00313D;
+        margin: 0 0 16px 0;
+      }
+
+      .content-section-intro-text {
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.25;
+        margin: 0 0 12px 0;
+      }
+
+      .section-header-image {
+        max-width: 220px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin: 24px 0 0 0;
+      }
+
+      .issue-table,
+      .oops-table,
+      .wins-table,
+      .news-table {
+        display: block;
+        margin: 0 0 4px 0;
+      }
+
+      .issue-table td,
+      .oops-table td,
+      .wins-table td,
+      .news-table td {
+        display: block;
+        width: 100%;
+      }
+
+      dl {
+        margin: 0 0 10px 0;
+        padding: 0;
+      }
+
+      dt.sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+
+      dd {
+        margin: 0;
+        padding: 0;
+      }
+
+      .issue-title,
+      .oops-title,
+      .wins-title,
+      .news-title {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        margin: 0 0 2px 0;
+        color: #00313D;
+      }
+
+      .issue-customer,
+      .oops-customer,
+      .wins-customer,
+      .news-customer {
+        color: #0071CE;
+        font-weight: 500;
+        font-size: 11px;
+        margin: 0 0 4px 0;
+      }
+
+      .issue-summary,
+      .oops-summary,
+      .wins-summary,
+      .news-summary {
+        margin: 0 0 10px 0;
+        font-weight: 500;
+        line-height: 1.25;
+        font-size: 11px;
+      }
+
+      .ticket-link {
+        font-size: 10px;
+        font-weight: 500;
+        margin: 0 0 10px 0;
+      }
+
+      .ticket-link a {
+        color: #0071CE;
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          padding: 24px 28px;
+        }
+
+        .issue-title,
+        .oops-title,
+        .wins-title,
+        .news-title {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      
+
+  
+  <div>
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/supportmail_header.png"
+      alt="SupportMail header"
+      class="header-image"
+    />
+    <p class="publish-date-label">Date published</p>
+    <p class="publish-date-value">February 9, 2026</p>
+  </div>
+
+  
+  <div>
+      Welcome to the January edition of SupportMail.
+      For those of you new to this aggregation, SupportMail is an internal
+      email assembled by the Support team to highlight noteworthy tickets,
+      calls, events, etc., that seem likely to be of interest to a larger
+      audience. Inclusions are for information purposes and are not limited
+      to unsolved issues.
+    </p>
+
+    <p>
+      If you think any internal party should be added to this distribution
+      list, please send a request and email address to
+      <a href="mailto:rich.shupe@learnosity.com">Rich Shupe</a>.
+    </p>
+  </div>
+  <section id="trends">
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_trends.png"
+      alt="Trends section header"
+      class="section-header-image"
+    />
+    <p class="content-section-intro-text">
+      Here are some of the trends we've noticed in the past month:
+    </p>
+    <h1> Trends Stuff</h1>
+  </section>
+  
+  
+  <section id="issues">
+
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_issues.png"
+      alt="Issues section header"
+      class="section-header-image"
+    />
+
+    <p class="content-section-intro-text">
+      Here are some of the notable customer issues that have come across
+      our desks recently:
+    </p>
+
+    
+
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Data Table Preview Scrubber Configuration</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Beable Education</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer inquired about hiding the Data Table preview scrubber at the item level via LRNO configuration. It was clarified that no out-of-the-box setting currently exists to disable the scrubber independently. The scrubber appears whenever dynamic data tables are present in items, even if editing is restricted. The customer’s use case involves instructors cloning items with dynamic data tables but not viewing or editing them; thus, showing the scrubber causes confusion. The recommended workaround is to hide the scrubber via custom CSS. A feature request to add a configuration option to disable the scrubber was offered, pending more detailed use-case context from the customer. The conversation is awaiting any further background to support the feature request.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29530">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Bug</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Question Type Logic / Scoring Issue</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Pearson Core Platforms</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an issue with the Match List question type where integer values used as options result in incorrect answers being set as correct. The support team replicated the problem and confirmed it as a bug. They requested the customer&#x27;s LTS version and upgrade plans for further investigation. The case is currently open, with the team working on a resolution and updates to be provided.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/17429">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Items Api / Json Structure Conflict</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Riverside Insights</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer needed help setting up an activity with multiple sections but encountered JSON errors and issues with empty &quot;items&quot; arrays being appended by the author site, causing validation errors. Support identified this as a known bug where the author site forcibly adds an empty &quot;items&quot; array, conflicting with the use of &quot;sections&quot; in the Items API. The workaround is to remove the empty &quot;items&quot;</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/24650">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Upgrade Regression</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Accordion Behavior In Items Api</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Achievement Network</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer is upgrading from Items API v2024.2 to v2025.2 and experiencing an issue where Accordion elements&#x27; content is hidden but still occupies space, unlike the previous version. They provided detailed configs, code snippets, and screenshots showing CSS discrepancies, suspecting a Learnosity CSS rule enforcing height and display properties. The support team could not reproduce the issue in a vanilla environment and suggested CSS workarounds like using display:none, but the customer prefers a proper fix in the API to avoid fragile hacks. The support team explained their sprint-based release cycle, estimating no fix before late September or October, and recommended a temporary workaround. The customer implemented a workaround that avoids direct Learnosity element manipulation and awaits a formal fix. Additionally, the customer raised concern about a broad CSS rule using :is(#lds, body) .collapse:not(.show) { display:none } that may unintentionally affect page elements outside Learnosity. Support acknowledged this and plans to escalate it to engineering, with the ticket added to backlog for future triage. The customer suggested narrowing the CSS selector to avoid affecting global page styles. No ETA for a fix is currently available; updates will be provided as progress occurs.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28622">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Bug</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Activity Search &amp; Bulk Update Errors</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Cengage Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer is experiencing frequent errors when searching for activities and performing bulk item updates in Cengage Course Solutions – Production, requiring multiple refreshes to resolve. The support agent attempted to reproduce the issue without success initially but requested videos and console error details from the customer. After receiving videos and error information, the agent successfully replicated the problem and escalated it to engineering for resolution. The ticket remains pending while awaiting a fix from the engineering team. No further customer actions are currently requested.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29562">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Feature Request</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Media Handling In Classification Questions</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Cengage Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an issue with audio clips in their custom Classification (Many to Many) question type, which has &quot;duplicate_responses&quot; enabled. This problem does not occur in the Many to One type without duplicate responses. The support agent reproduced the issue and escalated it to engineering. Engineering identified a fundamental incompatibility: audio/video players require unique IDs, but duplicate responses duplicate the player without unique IDs, causing conflicts. Therefore, audio/video features cannot currently support duplicate responses. A long-term feature request is raised, but no short-term fix is available. The customer is advised to disable duplicate responses or use alternative question types. Additionally, a related audio player issue on touch devices is under review.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27357">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Investigation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Drawing Question Response Persistence &amp; Reporting Mismatch</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Manabie</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported that after submitting an assessment with a Drawing question type, the session-detail-by-item report shows no drawing data, though the API indicates the question was attempted. Learnosity clarified that they do not store historical session states and noted the response data is null despite &quot;attempted: true,&quot; which is unusual. The item attempt status is &quot;not attempted,&quot; conflicting with the response attempt flag. Learnosity is investigating the cause and asked if the customer uses resetResponses() or question.reset() methods to help narrow down the issue. No resolution yet; further investigation is ongoing.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28187">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Bug</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Scoring Api Math Content Errors</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Uniwise</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer has been experiencing recurring 500 Internal Server Errors on the scoring endpoint, impacting their ability to generate accurate statistics for grading. Initial scaling of containers temporarily reduced errors, but issues persisted, primarily affecting this customer despite relatively low request volumes. Investigation revealed two content-related bugs in legacy and current math question types causing scoring failures. The engineering team is actively working on fixes, with an expected sprint completion around early November and ongoing testing. The customer reduced batch sizes from 750 to 500 questions per request to mitigate errors but cannot reduce further due to performance concerns. Recent monitoring shows no new 500 errors since early November, though the customer has a backlog of failed builds to retry. The support team continues to monitor and awaits customer feedback on error resolution.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28869">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Client Enablement</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Max Score Calculation &amp; Api Limitations</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Mereos</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer wants to quickly obtain the max score of an activity even if no session exists. Initially, it was explained that no direct API provides this; the max score must be calculated by summing individual question scores via multiple Data API calls. The customer expressed frustration with slow loading and indirect APIs. The support agent recommended switching API endpoints to the EU region to reduce latency and suggested splitting large single-item activities into multiple items to improve performance using lazy loading. The customer reported discrepancies between max scores from session endpoints and manual calculations, which the agent attributed to improperly authored questions lacking valid correct answers, manual scoring, and edits to items after sessions were created. The agent clarified that max_score is defined at the item level, not question level, and sessions capture snapshots of item data at the time of creation, causing differences if items are edited later. The agent advised using different activity IDs for cohorts to avoid such discrepancies. Finally, the agent confirmed it is possible to get the max_score of an item containing many questions by querying the Data API with the item reference and including &quot;max_score&quot; in the request. An example response showed an item with 30 questions and a max_score value. No direct API exists to get max score of an activity without a session; it requires summing item/question scores. Performance can be improved by using EU endpoints and splitting large items. Discrepancies in max scores arise from question authoring issues, manual scoring, and item edits post-session. The agent will discuss internally about additional solutions.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29092">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Tag Volume &amp; Query Performance</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Cengage Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer inquired about fetching items from the ItemBank with specific tags (ssoIsbn, discipline) in Unpublished status and activities with specific tags containing items without tags. The support team investigated and found that the customer&#x27;s use of single-use tags (e.g., Legacy ID, audio, Media) has grown excessively, with some tag types exceeding hundreds of thousands or over a million unique tags. This misuse causes slow or failing tag-based queries, including the requested API calls timing out or returning errors. The recommendation is to move seldom-used or single-use metadata out of Learnosity tags into the customer&#x27;s own lookup tables to improve query performance. The team confirmed the intended API usage but noted current limitations due to tag volume. No immediate fix was provided; the issue is under review with engineering.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29149">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Incident</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Assessment Integrity &amp; Validation Exposure</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Powerschool Group</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">A security alert was raised regarding a publicly available cheating script on GitHub targeting Schoology assessments powered by Learnosity. The script automates answer extraction and completion by intercepting Learnosity API calls and exposes an AI21 API key, enabling unauthorized AI-based solving of assessments. The issue threatens assessment integrity and exposes confidential data. The vendor acknowledged the report, notified stakeholders, and identified the root cause as inclusion of validation data during assessment initialization. They plan to mitigate this by stripping validation data for high-stakes assessments and adding obfuscation/encryption in the next LTS release, tentatively scheduled for February. Updates will be provided as available.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29192">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Author Api Asset Upload Overrides</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Everway</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an issue with adding an audio feature in the Author API text editor: when selecting &quot;Audio&quot; and clicking &quot;+Add,&quot; an empty panel appears and becomes unresponsive. They are using version v2025.2.LTS in Chrome. The customer shared their assetRequest callback, which only handles image assets, overriding the default handler for all media types. The Learnosity engineer confirmed that providing an assetRequest callback overrides all asset types, requiring custom logic for each; currently, there is no way to mix custom handlers with default uploaders for other media types like audio or video. The engineer has raised feature requests to allow partial overrides and improve documentation clarity. The customer appreciated the update and feature requests. No immediate fix exists; next steps depend on future product updates.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29571">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group"></h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Item Pool Validation &amp; Widget Reference Conflicts</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">HMH Houghton Mifflin Harcourt</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported repeated &quot;halted&quot; status issues for the &quot;SS 2018 HS AH&quot; item pool due to duplicate widget references when combining content from multiple item banks. Engineering identified the root cause as two widgets sharing the same reference within the pool, causing the process to halt to prevent overwriting. The duplicate references stemmed from the customer&#x27;s use of the Data API and content export/import workflow, leading to conflicts especially with item 611218410. Engineering resolved the halted status issue for this item pool, enabling successful publishing. They plan to follow up separately to understand the customer&#x27;s workflow and prevent future occurrences. The customer confirmed they can now publish without issue.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/26841">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Bug</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Items Api Runtime Errors (10001)</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Progress Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported intermittent 10001 errors with Learnosity Items API on version 2024.3 in preprod and QA environments, especially on unstarted Study Plan activities. Support investigated but could not consistently reproduce the issue; CPU throttling triggered it sometimes. A theory about &quot;Enable Scrolling For Long Content&quot; item setting was tested and ruled out. Engineering released a fix on the developer version, later backpatched to 2024.3.LTS and 2025.1.LTS. The customer planned to upgrade QA to 2025.1.LTS and test. After upgrade, new bugs appeared including persistent intermittent 10001 errors in Author API preview. Support requested login and repro steps to escalate. Separate tickets were created for other issues. The latest 10001 error report was linked to a related ticket for further investigation. The fix deployment to production was confirmed but some issues remain in newer versions.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/26886">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group"></h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Automatic Translation &amp; Dynamic Content Loading</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Hats &amp; Ladders</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an issue where Google Chrome&#x27;s native Translate feature does not automatically translate newly loaded Learnosity assessment content until the user toggles the language manually. This occurs due to a race condition where Chrome Translate activates before the dynamic Learnosity content fully loads into the DOM. The problem is specific to Chrome and Chrome-based browsers; other browsers like Safari, Edge, and Firefox do not exhibit this issue. Learnosity support escalated the issue to engineering but found they have limited control over Google Translate&#x27;s DOM parsing and timing. A fix would require potentially breaking DOM changes and could only be released in a future major version, with no firm ETA. The customer understands the limitations and plans a tiered approach: continue using Chrome Translate for low-stakes formative assessments, implement static translations with Learnosity tools for higher-stakes content, and possibly raise the issue with Google. The ticket is now marked solved with no immediate fix available.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/26990">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Bug</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Learning Outcomes Report Data Ingestion</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">iTrack Education</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported a 500 Internal Server Error when loading the Learning Outcomes report, while other reports worked fine. The support agent escalated the issue to engineering, who identified and fixed the root cause involving dataset indexing. The fix required re-submitting historical sessions to populate data. The customer tested new sessions but initially saw no data, prompting further investigation and urgent escalation. Engineering then performed a &quot;touch&quot; on relevant items to trigger re-ingestion and released a fix on the developer version of the Reports API. The customer confirmed the report now loads correctly with data, even without explicitly using the developer version. The fix is being patched to production Long Term Support versions. The case is resolved with the report functioning as expected.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27396">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Data Visualization Issue</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Missing Metadata &amp; Session Reprocessing</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Carnegie Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an error in their production environment when loading an outcomes report, indicating a missing tag ID in the item bank. The support team confirmed the tag was deleted on August 21, 2024, and identified six affected items and four user sessions impacted by this deletion. They recommended using the Reports API&#x27;s errorListener callback to suppress user alerts temporarily and suggested reprocessing affected sessions via the Change Sessions Statuses and Trigger Followup Processing Data API to backfill data and resolve the error. The customer has a process to handle rescoring for manually scored items during reprocessing. Support is awaiting engineering feedback on retrieving the deleted tag&#x27;s name and has logged a product enhancement request to improve error messaging by including the tag name.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27398">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Product Investigation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Assessment Navigation State &amp; Session Resume Issues</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Flat World Knowledge</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reports recurring issues where students lose the ability to navigate between questions in assignments, especially when resuming previously started attempts. The problem involves navigation buttons becoming disabled (&quot;toc-disabled&quot; class and disabled attributes), and persists despite using recommended settings like shuffle_items and auto-saving. Support investigated and found no reproducible steps in a vanilla environment except in a rare case of manual item order changes between sessions. They advised implementing robust user session management to prevent multiple concurrent sessions. The customer provided session IDs and LogRocket videos showing the issue. Support escalated a working theory to Engineering and shared environment credentials for deeper investigation. The issue remains unresolved but Engineering is actively investigating.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28724">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Assessment Best Practices</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Client-Side Validation Exposure</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Larson Texts (Big Ideas Learning)</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer is concerned that the current &quot;Check Answer&quot; feature exposes validation data client-side, allowing students to &quot;hack&quot; and obtain correct answers, undermining assessment integrity. Learnosity confirmed no out-of-the-box solution exists to perform local validation without exposing validation data, as server-side scoring per question is impractical due to rate limits and performance. Recommended best practice is to strip validation and disable Check Answer for high-stakes tests, but the customer wants a more robust solution. Learnosity proposed a custom Check Answer routine that fetches validation data server-side per assessment, obfuscates it, and serves it to clients, balancing security and performance. They also discussed differentiating assessment modes (practice vs. exam) to control validation exposure. A stakeholder call is being arranged to explore these options further.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27102">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Client Enablement</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Activity—Level Localization (Labelbundle)</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">HMH Houghton Mifflin Harcourt</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The issue was a missing labelBundle property; however, HMH is still using base templates for this item bank, so we couldn’t resolve it by updating a player template. Because base templates can’t be modified through the UI or Data API, a script was required as a workaround to update all affected content.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29393">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Hosted Video Player Format Support</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">MZ Development</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer inquired about playing WebM video files instead of MP4s using the hosted video player, as their project videos are in WebM format. Support confirmed the hosted player officially supports only MP4 files up to 100 MB, though WebM files can be uploaded via the Data API and may play in browsers due to browser behavior, but this is not guaranteed or supported. The customer noted their lockdown browser client does not support MP4, necessitating WebM support. Support escalated a feature request for WebM support to product and engineering teams, clarifying any solution would be long-term. Currently, using WebM via manual upload is a possible but unsupported workaround.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29444">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Incident</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Regional Routing &amp; Firewall Access</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">iCEV</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported that two correctional facilities suddenly could not access Learnosity assessments due to requests hitting regional URLs (questions-va.learnosity.com) instead of the expected base URL (questions.learnosity.com), which their firewall whitelist did not allow. Learnosity support confirmed no intentional changes but noted default routing to the US East (VA) region if no regional endpoint is specified. Multiple customers were affected, prompting escalation to engineering. Learnosity identified and fixed the issue by updating hosts and load balancers, completing 50% of updates initially and finishing shortly after. The customer confirmed the platform is now working for their users.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29520">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group"></h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Server/Client Evaluation &amp; Api Metadata</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Manabie</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported an issue where their custom math question&#x27;s max score was showing as zero in the response session and reports, despite being set correctly by the author. Investigation revealed a server-side scoring error caused by use of the browser-only `window` object in their scorer.js, which was fixed by removing such references. Then, a critical error occurred because `mathcore.validate()` was undefined server-side; Learnosity engineering confirmed this as a platform issue and provided a workaround to use `mathcore.evaluateVerbose()` on the server and `mathcore.validate()` on the client, resolving scoring inconsistencies. The customer confirmed the fix worked. Later, the customer reported the Data API endpoint for item max score still returned zero despite correct authoring. After further review, Learnosity confirmed recent changes fixed this, and the endpoint now returns the correct max score. The ticket was closed with the issue resolved. No further action or API upgrades are needed from the customer.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27076">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Math Validation Errors In Review State</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Larson Texts (Big Ideas Learning)</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer reported a validation error (10019) occurring during Learnosity&#x27;s review state for a math question using the older clozeformula question type, specifically when a student submits a response involving square roots and fractions. The error triggers the error handler despite the response rendering correctly and scoring properly, causing concern about the review flow. The support agent confirmed the issue stems from limitations in the original clozeformula engine, which is less capable of handling complex math expressions, and recommended migrating to the newer clozeformulav2 question type that handles such cases without errors. The agent escalated the issue to Engineering for investigation and submitted a feature enhancement request to warn authors when question setups exceed clozeformula’s capabilities. The customer inquired about the impact of switching question types on existing assignments; the agent explained that changing question types mid-assessment can cause inconsistencies for prior and in-progress submissions and may affect reporting. The current advice is to ignore the console error temporarily while Engineering investigates, as alternative solutions may emerge without requiring immediate question type changes. The agent will provide updates as available.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27797">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="issue-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="issue-title">Offline Package Generation Size Limits</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="issue-customer">Progress Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="issue-summary">The customer is experiencing failures when generating offline packages of 1000 items, receiving a halted status after 30 seconds. A workaround of splitting into two 500-item packages is not ideal. The agent confirmed the issue is due to a package size limit of 500MB and will consult product management for potential solutions.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28849">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+
+  </section>
+  
+  
+
+  
+  
+  <section id="oops">
+
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_oops.png"
+      alt="Oops section header"
+      class="section-header-image"
+    />
+
+    <p class="content-section-intro-text">
+      Here are some recent oops moments worth noting:
+    </p>
+
+    
+
+    
+      <section>
+        <h3 class="topic-group">Platform Incident</h3>
+
+        
+          <table class="oops-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="oops-title">Scoring Delay During Db Migration</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="oops-customer">Manabie</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="oops-summary">The customer, Manabie, reported an issue on December 15th where some Learnosity sessions were returned as incomplete due to delayed scoring responses between 4:30 PM and 5:00 PM VNT. Investigation revealed the root cause was a scheduled database migration from MySQL to PostgreSQL, part of a platform-wide upgrade to improve performance and scalability. The migration involved temporary processing queues and a brief cutover period causing scoring delays but no data loss or submission interruptions. The vendor apologized for the impact and acknowledged the lack of prior notification, committing to better communication for future maintenance. The customer accepted the explanation and plans to inform partners accordingly. No unresolved issues remain.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29381">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+
+  </section>
+  
+  
+
+  
+  
+  <section id="wins">
+
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_wins.png"
+      alt="Wins section header"
+      class="section-header-image"
+    />
+
+    <p class="content-section-intro-text">
+      Here are some recent wins worth celebrating:
+    </p>
+
+    
+
+    
+      <section>
+        <h3 class="topic-group">Authoring Workflow</h3>
+
+        
+          <table class="wins-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="wins-title">Multilingual Content Management</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="wins-customer">ACTFL</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="wins-summary">The customer, Reuben, inquired about using the Author Aide translation tool, specifically about viewing original English content alongside translations in metadata fields and preventing certain fields (like Introduction text) from being translated. Anthony responded that side-by-side metadata viewing is currently unavailable and that all text fields are translated by default, recommending manual overwriting for untranslated sections. Anthony also informed Reuben about upcoming bulk translation features, clarifying no need to duplicate items before translation and that usage limits depend on contract terms. Reuben requested security information about content translation; Anthony provided a relevant FAQ document link. Additionally, Anthony introduced a pending LT Library plugin for multilingual content inclusion, explaining it requires manual integration and does not offer built-in grammar/spelling checks. Reuben expressed interest and will await further updates. No explicit next steps were stated beyond monitoring feature developments and potential client testing.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/26580">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Performance Issue</h3>
+
+        
+          <table class="wins-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="wins-title">Author Api Activity Listing</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="wins-customer">Cengage Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="wins-summary">The customer reported slow performance and occasional timeouts when loading the Author API Activity List view, especially with a large number of activities in their dev item bank. They use a workflow where they initially load the activity list, then call navigate() with complex tag filters, causing multiple server calls and slow load times. The support agent recommended avoiding the extra navigate() call by applying filters directly in the initial Author API request or calling navigate() once in the readyListener event, which improved performance. The customer cannot use the initial filter config due to a known issue and has many throw-away activities from automated tests, which may impact performance. The agent advised preventing saving test activities by intercepting saves and using just-in-time previews via the Items API, and archiving old test activities to reduce load. The customer confirmed their automated tests do not run on production and are limited in concurrency. The agent also addressed a similar issue with the item list view, requesting the customer&#x27;s initialization JSON to investigate why filters do not apply when using navigate() in readyListener. The conversation is ongoing with the agent awaiting further details to reproduce the item list issue.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27281">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+
+  </section>
+  
+  
+
+  
+  
+  <section id="news">
+
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_news.png"
+      alt="News section header"
+      class="section-header-image"
+    />
+
+    <p class="content-section-intro-text">
+      Here is some recent news worth sharing:
+    </p>
+
+    
+
+    
+      <section>
+        <h3 class="topic-group">Operational Task</h3>
+
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Bulk Activity &amp; Session Deletion</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Accelerate Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">The customer requested deletion of activities tagged as &quot;Assignment&quot; or &quot;Resource&quot; created before July 4, 2025, initially in the dev environment for review, then in production. They do not require backup but want to review data counts before deletion. The support team clarified data counts, deletion scope, and backup policies, confirming data is stored in the customer&#x27;s warehouse. Engineering validated deletion scripts in QA and staging, planning to delete over 9 million sessions in batches over 13-18 days, starting with dev. The customer requested confirmation of deletion scope and expected activity counts in dev. The process is pending engineering confirmation and scheduled to begin soon.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28884">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Incident</h3>
+
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Adaptive Scoring Stuck In Pending_Scoring</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Manabie</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">The customer reported multiple assessment sessions stuck in the PENDING_SCORING status for over a day, preventing users from seeing their scores and impacting exams. Initial investigation revealed the status is transient but sessions stalled due to missing question/response data in the adaptive session database, causing the scoring engine to hang. The engineering team is still investigating the root cause, including potential content issues. The customer declined manual grading tools and seeks a thorough incident analysis with root cause identification and preventive measures, emphasizing the critical impact on user trust and exam integrity. Retakes are a short-term workaround but not a viable long-term solution. No resolution yet; further investigation and updates are pending.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/29358">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Assessment Best Practices</h3>
+
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">File Uploads &amp; Save Workflow</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Wiley</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">Students reported uploading files that instructors could not see in assignments. Investigation showed no saved or submitted sessions for the provided session and user IDs, indicating uploads were not finalized. After receiving upload attempt dates, engineering retrieved the files from backend storage but noted this is not a sustainable solution. They recommended implementing a save() method call triggered by a file upload completion event to ensure sessions are saved. The customer acknowledged the advice and plans to address it in a future sprint. The ticket is tentatively closed, pending any further questions.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27189">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Platform Limitation</h3>
+
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Annotation Tool Anchoring In Scrollable Content</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Progress Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">The customer reported that drawings made with the annotation tool are not anchored to the drawn area when scrolling within passages that have scrolling enabled. The support agent reproduced the issue and escalated it to Engineering. Engineering confirmed the root cause: the drawing tool anchors to the main browser scroll, not the inner passage scroll, due to design limitations. No short-term fix is available, so the agent recommended either disabling passage scrolling or using highlights instead, which remain anchored. The customer accepted this and requested updates on a related highlighter fix. The highlighter fix is tentatively scheduled for deployment by March 11. The case was closed with a link to the ongoing highlighter ticket for further updates.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27223">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Annotation Behavior With Scrollable Content</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Pearson Assessment Group</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">The customer reported that drawings and annotations do not move correctly when the &quot;Enable scrolling for long content&quot; feature is enabled, causing them to remain static instead of sticking to their original positions during scrolling. This issue was confirmed internally and escalated as a bug to Engineering. A temporary workaround suggested was to use the &quot;Highlight&quot; annotation tool, which remains correctly positioned during scrolling. The customer requested the fix by end of March due to peak exam season starting in May. Engineering explained the typical bug fix SLA is 6-8 weeks to dev release and 9-11 weeks to production, with fixes backpatched to supported LTS versions upon request. The customer is currently on v2023.1 but upgrading to v2024.2, and requested the fix be backpatched to v2024.2. Engineering later confirmed the root cause is a design limitation where drawings track the main window scroll, not inner scrollbars, making a fix unfeasible short-term. They recommended avoiding using drawing annotations with long content scrolling enabled. A formal feature request was submitted for a long-term solution, which will be prioritized and released in a future LTS version following standard feature request timelines. The customer acknowledged the update and will await further news on the feature request.</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27235">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+      <section>
+        <h3 class="topic-group">Performance Issue</h3>
+
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Authoring Scalability &amp; Test Data Overload</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">Cengage Learning</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">Customer Akshay reports slowness and errors in the create item flow due to over 50,000 passages caused by their automated testing flooding the item bank. Support explained this volume is abnormal, requested halting automated testing in authoring, and noted no current solution exists to fix the slowness or errors.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/27514">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <table class="news-table" role="presentation">
+            <tbody>
+              <tr>
+                <td>
+                  <dl>
+                    <dt class="sr-only">Title</dt>
+                    <dd class="news-title">Assessment Api Concurrency &amp; Rate Limits</dd>
+
+                    <dt class="sr-only">Customer</dt>
+                    <dd class="news-customer">TVO</dd>
+
+                    <dt class="sr-only">Summary</dt>
+                    <dd class="news-summary">The customer inquired about rate limits on the Assessment API due to concerns about scaling for 6,000-12,000 students starting a standardized test simultaneously. The response clarified that there are no rate limits on the Assessment API itself, which supports over 40 billion requests annually and millions of daily users. Rate limits apply only to the Data API, which handles bulk content operations, and even those limits are high and manageable with batching. The assessment concurrency is generally not an issue since most processing occurs client-side, with staggered user interactions. The team requested a sample day/time for peak activity to inform engineering considerations. No immediate action is required; the engineering team will be informed of the customer&#x27;s scalability expectations.
+</dd>
+
+                    
+                    <dt class="sr-only">Ticket</dt>
+                    <dd class="ticket-link">
+                      <a href="https://learnositysupport.zendesk.com/agent/tickets/28117">View ticket</a>
+                    </dd>
+                    
+                  </dl>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+      </section>
+    
+
+  </section>
+  
+  
+
+
+    </div>
+  </body>
+</html>

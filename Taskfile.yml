@@ -1,0 +1,128 @@
+version: "3"
+
+silent: true
+
+vars:
+  PORT: '{{.PORT | default "7500"}}'
+  IMAGE_NAME: '{{.IMAGE_NAME | default "supportmailmaker"}}'
+  IMAGE_TAG: '{{.IMAGE_TAG | default "latest"}}'
+
+tasks:
+  # ---------------------------------------------------------------------------
+  #  Default
+  # ---------------------------------------------------------------------------
+  default:
+    desc: Start the Generator Server (alias for 'start')
+    cmds:
+      - task: start
+
+  # ---------------------------------------------------------------------------
+  #  Server
+  # ---------------------------------------------------------------------------
+  start:
+    desc: Start the Generator Server on a given port
+    aliases: [ serve, run ]
+    vars:
+      PORT: '{{.CLI_ARGS | default .PORT}}'
+    env:
+      GRADIO_SERVER_PORT: "{{.PORT}}"
+      GRADIO_NUM_PORTS: "1000"
+      GRADIO_NODE_NUM_PORTS: "1000"
+      GRADIO_ANALYTICS_ENABLED: "True"
+      SUPPORTMAIL_HTML_TEMPLATE: '{{.SUPPORTMAIL_HTML_TEMPLATE | default "./support_mail_maker/templates"}}'
+    cmds:
+      - echo "🚀 Starting Generator Server on port {{.PORT}}..."
+      - defer: { task: clear-logs }
+      - python support_mail_maker/app.py
+
+  # ---------------------------------------------------------------------------
+  #  Testing
+  # ---------------------------------------------------------------------------
+  test:
+    desc: Run the full test suite
+    aliases: [ tests ]
+    cmds:
+      - echo "🧪 Running test suite..."
+      - python -m pytest support_mail_maker/tests/ {{.CLI_ARGS}}
+      - echo "✅ Tests complete."
+
+  test:verbose:
+    desc: Run tests with verbose output
+    cmds:
+      - echo "🧪 Running test suite (verbose)..."
+      - python -m pytest support_mail_maker/tests/ -v
+      - echo "✅ Tests complete."
+
+  test:coverage:
+    desc: Run tests with coverage report
+    cmds:
+      - echo "🧪 Running test suite with coverage..."
+      - python -m pytest support_mail_maker/tests/ --cov=support_mail_maker --cov-report=term-missing {{.CLI_ARGS}}
+      - echo "✅ Tests complete."
+
+  # ---------------------------------------------------------------------------
+  #  Linting & Formatting
+  # ---------------------------------------------------------------------------
+  lint:
+    desc: Run linters (isort check + black check)
+    cmds:
+      - echo "🔍 Checking code style..."
+      - python -m isort --check-only --diff support_mail_maker/
+      - python -m black --check support_mail_maker/
+      - echo "✅ Lint check passed."
+
+  fmt:
+    desc: Auto-format code with isort and black
+    aliases: [ format ]
+    cmds:
+      - echo "🖌️  Formatting code..."
+      - python -m isort support_mail_maker/
+      - python -m black support_mail_maker/
+      - echo "✅ Formatting complete."
+
+  # ---------------------------------------------------------------------------
+  #  Docker
+  # ---------------------------------------------------------------------------
+  docker:build:
+    desc: Build the Docker image
+    cmds:
+      - echo "🐳 Building Docker image {{.IMAGE_NAME}}:{{.IMAGE_TAG}}..."
+      - docker build -t {{.IMAGE_NAME}}:{{.IMAGE_TAG}} .
+      - echo "✅ Docker image built successfully."
+
+  docker:run:
+    desc: Run the application in a Docker container
+    deps: [ docker:build ]
+    cmds:
+      - echo "🐳 Running {{.IMAGE_NAME}}:{{.IMAGE_TAG}} on port {{.PORT}}..."
+      - >-
+        docker run --rm -p {{.PORT}}:7500 --name supportmailmaker {{.IMAGE_NAME}}:{{.IMAGE_TAG}}
+
+  docker:stop:
+    desc: Stop the running Docker container
+    cmds:
+      - echo "🛑 Stopping container..."
+      - docker stop supportmailmaker
+      - echo "✅ Container stopped."
+
+  # ---------------------------------------------------------------------------
+  #  Utilities
+  # ---------------------------------------------------------------------------
+  clear-logs:
+    desc: Clear the main log file
+    aliases: [ clean-logs ]
+    cmds:
+      - echo "🧹 Clearing logs..."
+      - mkdir -p logs && truncate -s 0 logs/main.log
+      - echo "✅ Logs cleared."
+    status:
+      - test ! -f logs/main.log
+
+  clean:
+    desc: Remove build artifacts, caches, and generated files
+    cmds:
+      - echo "🧹 Cleaning build artifacts and caches..."
+      - rm -rf .pytest_cache __pycache__ support_mail_maker/__pycache__ support_mail_maker/tests/__pycache__
+      - find . -name "*.pyc" -delete 2>/dev/null || true
+      - task: clear-logs
+      - echo "✅ Clean complete."

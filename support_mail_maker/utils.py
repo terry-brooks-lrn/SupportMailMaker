@@ -19,7 +19,9 @@ logger.add(sys.stdout, level="INFO", colorize=True)
 # Global variable to store the cached schema
 SUPPORT_MAIL_SCHEMA = None
 
-def load_schema(schema_path="src/app/support_mail.schema.json", schema_url="https://learnosity.b-cdn.net/schema/support_mail.schema.json") -> dict:
+_default_schema_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "support_mail.schema.json")
+
+def load_schema(schema_path=_default_schema_path, schema_url="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/support_mail.schema.json") -> dict:
     """
     Load and cache the JSON schema at the module level.
 

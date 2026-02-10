@@ -1,5 +1,3 @@
-from xml.dom import ValidationErr
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from typing import Union, Dict, Any, List, TextIO
 from datetime import datetime
@@ -18,11 +16,12 @@ from loguru import logger
 import django
 from django.conf import settings
 
+_default_template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
 settings.configure(
     TEMPLATES=[
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
-            "DIRS": [os.environ['SUPPORTMAIL_HTML_TEMPLATE']],  # Template directory
+            "DIRS": [os.environ.get('SUPPORTMAIL_HTML_TEMPLATE', _default_template_dir)],  # Template directory
             "APP_DIRS": False,  # Optimization: Set to False if not using app-level templates
             "OPTIONS": {
                 "context_processors": [
@@ -68,9 +67,10 @@ class Item:
         ValueError: If the provided item_type is not valid.
     """
 
-    def __init__(self, title, summary, customer, item_type, ticket_url=None):
+    def __init__(self, title, domain,  summary, customer, item_type, ticket_url=None):
         self.data = {
             "title": title,
+            "topic_domain": domain,
             "summary": summary,
             "customer": customer,
             "item_type": self.validate_item_type(item_type),
@@ -127,6 +127,7 @@ class Item:
     def in_dict_format(self):
         return {
             "title": self.data['title'],
+            "domain": self.data['topic_domain'],
             "summary": self.data['summary'],
             "customer": self.data['customer'],
             "item_type": self.data['item_type'].value,
@@ -139,12 +140,25 @@ class Formatter:
     """
     def __init__(self, publish_date: str):
         self.publish_date = datetime.strptime(publish_date, "%Y-%m-%d")
+
+        # Edition month is one calendar month before the publish date.
+        # day=1 avoids overflow (e.g. March 31 → no Feb 31).
+        if self.publish_date.month == 1:
+            edition_month_dt = self.publish_date.replace(
+                year=self.publish_date.year - 1, month=12, day=1
+            )
+        else:
+            edition_month_dt = self.publish_date.replace(
+                month=self.publish_date.month - 1, day=1
+            )
+
         self.html: str = ""
-        self.markdown:str = ""
+        self.markdown: str = ""
         self.content_data: Union[str, Dict[str, Any]] = {}
         self.context: Dict[str, Any] = {
-            "publish_date": self.publish_date.strftime('%m/%d/%Y'),
-            "content": {"issues": [], "oops": [], "wins": [], "news": []},
+            "publish_date": self.publish_date,
+            "edition_month": edition_month_dt,
+            "content": {"issues": [], "oops": [], "wins": [], "news": [], "trend_html": ""},
         }
 
     def __getitem__(self, key):
@@ -195,9 +209,10 @@ class Formatter:
         """
         try:
             for item in tqdm(self.content_data):
-                if item['include'] == "✅":
+                if item.get("include") is True:
                     classed_item = Item(
                         title=item['title'],
+                        domain=item['topic_domain'],
                         summary=item['summary'],
                         customer=item['customer'],
                         item_type=item['type'],
@@ -238,14 +253,27 @@ class Formatter:
                 # 2) Properly await collate_content()
                 collate_ok = await self.collate_content()
                 if collate_ok:
+                    # 3) Validate the context JSON (serialize datetime for schema)
+                    validation_context = {
+                        **self.context,
+                        "publish_date": self.context["publish_date"].strftime("%Y-%m-%d")
+                        if isinstance(self.context["publish_date"], datetime)
+                        else self.context["publish_date"],
+                        "edition_month": self.context["edition_month"].strftime("%Y-%m-%d")
+                        if isinstance(self.context["edition_month"], datetime)
+                        else self.context["edition_month"],
+                    }
                     try:
-                        # 3) Validate the context JSON
-                        valid_JSON_input(self.context)
-                        # 4) Instead of self.publish(), use your async publish_async
+                        is_valid = valid_JSON_input(validation_context)
+                    except ValidationError as exc:
+                        logger.warning("Validation failed for publish context: %s", str(exc))
+                        return False
+
+                    if is_valid:
                         await self.publish_async()
                         return True
-                    except ValidationError as ve:
-                        logger.error(f"Unable to Publish Due to Validation Failure: {str(ve)}")
+                    else:
+                        logger.error("Unable to Publish Due to Validation Failure")
                         return False
             return False
         except Exception as e:
