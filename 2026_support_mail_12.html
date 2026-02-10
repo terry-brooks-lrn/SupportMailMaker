@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SupportMail</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap"
+    />
     <style>
       /* =============================================
          SupportMail — Learnosity brand stylesheet
@@ -12,16 +16,28 @@
            Midnight : #00313D
            Cobalt   : #0071CE
            Ruby     : #CE0E2D
+           Scarlet  : #EB3C3F
+           Honey    : #FFCB00
            White    : #FFFFFF
-         Typography : "Montserrat", Arial, sans-serif
+
+         Typography
+           Primary  : "Gilroy" (Bold 700, Medium 500)
+           Fallback : "Montserrat", Arial, sans-serif
+           Min size : 11px digital
+           Headline leading : 110%  (line-height 1.1)
+           Body copy leading: 125%  (line-height 1.25)
+           Colour   : Midnight or White; headlines may
+                      use a single secondary colour
+           Always sentence case, left-aligned
          ============================================= */
 
       body {
         background-color: #f3f3f3;
         color: #00313D;
-        font-family: "Montserrat", Arial, sans-serif;
+        font-family: "Gilroy", "Montserrat", Arial, sans-serif;
+        font-weight: 500;
         font-size: 11px;
-        line-height: 1.4;
+        line-height: 1.25;
         margin: 0;
         padding: 0;
       }
@@ -53,6 +69,8 @@
         color: #00313D;
         font-size: 16px;
         font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
         margin: 24px 0 8px 0;
       }
 
@@ -60,13 +78,23 @@
         color: #00313D;
         font-size: 13px;
         font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
         margin: 16px 0 6px 0;
+      }
+
+      .topic-group {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-size: 12px;
+        color: #0071CE;
       }
 
       p {
         margin: 0 0 12px 0;
         font-size: 11px;
-        line-height: 1.4;
+        font-weight: 500;
+        line-height: 1.25;
       }
 
       a {
@@ -76,6 +104,7 @@
 
       .publish-date-label {
         font-size: 10px;
+        font-weight: 500;
         font-style: italic;
         color: #00313D;
         margin: 0 0 2px 0;
@@ -83,14 +112,15 @@
 
       .publish-date-value {
         font-size: 13px;
-        font-weight: 600;
+        font-weight: 700;
         color: #00313D;
         margin: 0 0 16px 0;
       }
 
       .content-section-intro-text {
         font-size: 11px;
-        line-height: 1.4;
+        font-weight: 500;
+        line-height: 1.25;
         margin: 0 0 12px 0;
       }
 
@@ -145,6 +175,8 @@
       .news-title {
         font-weight: 700;
         font-size: 12px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
         margin: 0 0 2px 0;
         color: #00313D;
       }
@@ -164,12 +196,14 @@
       .wins-summary,
       .news-summary {
         margin: 0 0 10px 0;
-        line-height: 1.35;
+        font-weight: 500;
+        line-height: 1.25;
         font-size: 11px;
       }
 
       .ticket-link {
         font-size: 10px;
+        font-weight: 500;
         margin: 0 0 10px 0;
       }
 
@@ -198,7 +232,7 @@
   
   <div>
     <img
-      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/image-removebg-preview.png"
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/supportmail_header.png"
       alt="SupportMail header"
       class="header-image"
     />
@@ -208,7 +242,6 @@
 
   
   <div>
-    <p>
       Welcome to the January edition of SupportMail.
       For those of you new to this aggregation, SupportMail is an internal
       email assembled by the Support team to highlight noteworthy tickets,
@@ -223,13 +256,23 @@
       <a href="mailto:rich.shupe@learnosity.com">Rich Shupe</a>.
     </p>
   </div>
-
+  <section id="trends">
+    <img
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_trends.png"
+      alt="Trends section header"
+      class="section-header-image"
+    />
+    <p class="content-section-intro-text">
+      Here are some of the trends we've noticed in the past month:
+    </p>
+    <h1> Trends Stuff</h1>
+  </section>
   
   
   <section id="issues">
 
     <img
-      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_issues.png"
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_issues.png"
       alt="Issues section header"
       class="section-header-image"
     />
@@ -243,7 +286,7 @@
 
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -277,7 +320,7 @@
       </section>
     
       <section>
-        <h3>Product Bug</h3>
+        <h3 class="topic-group">Product Bug</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -336,7 +379,7 @@
       </section>
     
       <section>
-        <h3>Upgrade Regression</h3>
+        <h3 class="topic-group">Upgrade Regression</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -369,7 +412,7 @@
       </section>
     
       <section>
-        <h3>Product Bug</h3>
+        <h3 class="topic-group">Product Bug</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -403,7 +446,7 @@
       </section>
     
       <section>
-        <h3>Feature Request</h3>
+        <h3 class="topic-group">Feature Request</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -437,7 +480,7 @@
       </section>
     
       <section>
-        <h3>Product Investigation</h3>
+        <h3 class="topic-group">Product Investigation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -470,7 +513,7 @@
       </section>
     
       <section>
-        <h3>Product Bug</h3>
+        <h3 class="topic-group">Product Bug</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -503,7 +546,7 @@
       </section>
     
       <section>
-        <h3>Client Enablement</h3>
+        <h3 class="topic-group">Client Enablement</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -536,7 +579,7 @@
       </section>
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -569,7 +612,7 @@
       </section>
     
       <section>
-        <h3>Platform Incident</h3>
+        <h3 class="topic-group">Platform Incident</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -602,7 +645,7 @@
       </section>
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -636,7 +679,7 @@
       </section>
     
       <section>
-        <h3></h3>
+        <h3 class="topic-group"></h3>
 
         
           <table class="issue-table" role="presentation">
@@ -669,7 +712,7 @@
       </section>
     
       <section>
-        <h3>Product Bug</h3>
+        <h3 class="topic-group">Product Bug</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -702,7 +745,7 @@
       </section>
     
       <section>
-        <h3></h3>
+        <h3 class="topic-group"></h3>
 
         
           <table class="issue-table" role="presentation">
@@ -735,7 +778,7 @@
       </section>
     
       <section>
-        <h3>Product Bug</h3>
+        <h3 class="topic-group">Product Bug</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -769,7 +812,7 @@
       </section>
     
       <section>
-        <h3>Data Visualization Issue</h3>
+        <h3 class="topic-group">Data Visualization Issue</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -803,7 +846,7 @@
       </section>
     
       <section>
-        <h3>Product Investigation</h3>
+        <h3 class="topic-group">Product Investigation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -836,7 +879,7 @@
       </section>
     
       <section>
-        <h3>Assessment Best Practices</h3>
+        <h3 class="topic-group">Assessment Best Practices</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -869,7 +912,7 @@
       </section>
     
       <section>
-        <h3>Client Enablement</h3>
+        <h3 class="topic-group">Client Enablement</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -902,7 +945,7 @@
       </section>
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -935,7 +978,7 @@
       </section>
     
       <section>
-        <h3>Platform Incident</h3>
+        <h3 class="topic-group">Platform Incident</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -969,7 +1012,7 @@
       </section>
     
       <section>
-        <h3></h3>
+        <h3 class="topic-group"></h3>
 
         
           <table class="issue-table" role="presentation">
@@ -1030,7 +1073,7 @@
       </section>
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="issue-table" role="presentation">
@@ -1073,7 +1116,7 @@
   <section id="oops">
 
     <img
-      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_oops.png"
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_oops.png"
       alt="Oops section header"
       class="section-header-image"
     />
@@ -1086,7 +1129,7 @@
 
     
       <section>
-        <h3>Platform Incident</h3>
+        <h3 class="topic-group">Platform Incident</h3>
 
         
           <table class="oops-table" role="presentation">
@@ -1129,7 +1172,7 @@
   <section id="wins">
 
     <img
-      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_wins.png"
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_wins.png"
       alt="Wins section header"
       class="section-header-image"
     />
@@ -1142,7 +1185,7 @@
 
     
       <section>
-        <h3>Authoring Workflow</h3>
+        <h3 class="topic-group">Authoring Workflow</h3>
 
         
           <table class="wins-table" role="presentation">
@@ -1176,7 +1219,7 @@
       </section>
     
       <section>
-        <h3>Performance Issue</h3>
+        <h3 class="topic-group">Performance Issue</h3>
 
         
           <table class="wins-table" role="presentation">
@@ -1218,7 +1261,7 @@
   <section id="news">
 
     <img
-      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/news_header.png"
+      src="https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_news.png"
       alt="News section header"
       class="section-header-image"
     />
@@ -1231,7 +1274,7 @@
 
     
       <section>
-        <h3>Operational Task</h3>
+        <h3 class="topic-group">Operational Task</h3>
 
         
           <table class="news-table" role="presentation">
@@ -1264,7 +1307,7 @@
       </section>
     
       <section>
-        <h3>Platform Incident</h3>
+        <h3 class="topic-group">Platform Incident</h3>
 
         
           <table class="news-table" role="presentation">
@@ -1297,7 +1340,7 @@
       </section>
     
       <section>
-        <h3>Assessment Best Practices</h3>
+        <h3 class="topic-group">Assessment Best Practices</h3>
 
         
           <table class="news-table" role="presentation">
@@ -1331,7 +1374,7 @@
       </section>
     
       <section>
-        <h3>Platform Limitation</h3>
+        <h3 class="topic-group">Platform Limitation</h3>
 
         
           <table class="news-table" role="presentation">
@@ -1390,7 +1433,7 @@
       </section>
     
       <section>
-        <h3>Performance Issue</h3>
+        <h3 class="topic-group">Performance Issue</h3>
 
         
           <table class="news-table" role="presentation">

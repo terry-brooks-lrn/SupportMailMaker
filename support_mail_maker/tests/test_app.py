@@ -1,5 +1,8 @@
 import pytest
+from datetime import datetime
+from unittest.mock import patch, AsyncMock
 from app import normalize_csv_rows, CSV_COLUMN_ALIASES, _ALIAS_LOOKUP, _coerce_bool
+from formatter import Formatter
 
 
 class TestCSVColumnAliases:
@@ -449,3 +452,106 @@ class TestNormalizeCSVRowsIntegration:
         assert result is True
         assert len(formatter.get_items("issues")) == 1
         assert formatter.get_items("issues")[0]["title"] == "Template style issue"
+
+
+class TestTrendHtmlInput:
+    """Tests for the trend HTML input integration with the processing handler."""
+
+    @pytest.fixture(autouse=True)
+    def reset_formatter(self):
+        """Reset the module-level current_edition before each test."""
+        import app
+        app.current_edition = Formatter(
+            publish_date=datetime.now().strftime("%Y-%m-%d")
+        )
+        yield
+
+    async def test_trend_html_set_in_context_via_csv(self, tmp_path):
+        """User-supplied trend HTML should reach the Formatter context."""
+        import app
+        from app import is_ready_to_publish_async
+
+        csv_file = tmp_path / "test.csv"
+        csv_file.write_text(
+            "ticket_type,topic_domain,title,customer,summary,link,add_to_edition\n"
+            "Issue,Auth,Login Bug,Acme,Users cannot login,,true\n"
+        )
+
+        trend_content = "<p>Ticket volume up 15%</p>"
+
+        with patch.object(
+            app.current_edition, "send_to_press_async",
+            new_callable=AsyncMock, return_value=False,
+        ):
+            await is_ready_to_publish_async(
+                json_input=None,
+                file_input=str(csv_file),
+                trend_html=trend_content,
+            )
+
+        assert app.current_edition.context["content"]["trend_html"] == trend_content
+
+    async def test_trend_html_empty_string_when_not_provided(self, tmp_path):
+        """Empty trend input should store empty string in context."""
+        import app
+        from app import is_ready_to_publish_async
+
+        csv_file = tmp_path / "test.csv"
+        csv_file.write_text(
+            "ticket_type,topic_domain,title,customer,summary,link,add_to_edition\n"
+            "Issue,Auth,Login Bug,Acme,Users cannot login,,true\n"
+        )
+
+        with patch.object(
+            app.current_edition, "send_to_press_async",
+            new_callable=AsyncMock, return_value=False,
+        ):
+            await is_ready_to_publish_async(
+                json_input=None,
+                file_input=str(csv_file),
+                trend_html="",
+            )
+
+        assert app.current_edition.context["content"]["trend_html"] == ""
+
+    async def test_trend_html_none_becomes_empty_string(self, tmp_path):
+        """None (cleared Gradio field) should be coerced to empty string."""
+        import app
+        from app import is_ready_to_publish_async
+
+        csv_file = tmp_path / "test.csv"
+        csv_file.write_text(
+            "ticket_type,topic_domain,title,customer,summary,link,add_to_edition\n"
+            "Issue,Auth,Login Bug,Acme,Users cannot login,,true\n"
+        )
+
+        with patch.object(
+            app.current_edition, "send_to_press_async",
+            new_callable=AsyncMock, return_value=False,
+        ):
+            await is_ready_to_publish_async(
+                json_input=None,
+                file_input=str(csv_file),
+                trend_html=None,
+            )
+
+        assert app.current_edition.context["content"]["trend_html"] == ""
+
+    def test_trend_html_default_in_formatter(self):
+        """Formatter should initialize trend_html as empty string."""
+        f = Formatter(publish_date="2025-06-15")
+        assert f.context["content"]["trend_html"] == ""
+
+
+class TestCreateInputsReturnsTrendInput:
+    """Verify the UI builder returns the trend input component."""
+
+    def test_create_inputs_returns_three_components(self):
+        """create_inputs should return (json_textbox, file_upload, trend_textbox)."""
+        import gradio as gr
+        from app import create_inputs
+
+        with gr.Blocks():
+            result = create_inputs()
+        assert len(result) == 3
+        assert isinstance(result[2], gr.Textbox)

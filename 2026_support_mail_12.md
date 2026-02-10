@@ -9,12 +9,12 @@ SupportMail
 
 
 
-![SupportMail header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/image-removebg-preview.png)
+
+![SupportMail header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/supportmail_header.png)
 Date published
 
 
 February 9, 2026
-
 
 
 
@@ -27,8 +27,6 @@ February 9, 2026
  to unsolved issues.
  
 
-
-
  If you think any internal party should be added to this distribution
  list, please send a request and email address to
  [Rich Shupe](mailto:rich.shupe@learnosity.com).
@@ -37,7 +35,19 @@ February 9, 2026
 
 
 
-![Issues section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_issues.png)
+![Trends section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_trends.png)
+
+ Here are some of the trends we've noticed in the past month:
+ 
+
+
+Trends Stuff
+============
+
+
+
+
+![Issues section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_issues.png)
 
  Here are some of the notable customer issues that have come across
  our desks recently:
@@ -311,7 +321,7 @@ February 9, 2026
 
 
 
-![Oops section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_oops.png)
+![Oops section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_oops.png)
 
  Here are some recent oops moments worth noting:
  
@@ -330,7 +340,7 @@ February 9, 2026
 
 
 
-![Wins section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/header_wins.png)
+![Wins section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_wins.png)
 
  Here are some recent wins worth celebrating:
  
@@ -360,7 +370,7 @@ February 9, 2026
 
 
 
-![News section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/news_header.png)
+![News section header](https://dozens.nyc3.cdn.digitaloceanspaces.com/learnosity/section_header_news.png)
 
  Here is some recent news worth sharing:
  

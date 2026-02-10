@@ -22,6 +22,12 @@ class TestFormatterInit:
         assert content["wins"] == []
         assert content["news"] == []
 
+    def test_context_content_has_trend_html_default(self):
+        f = Formatter(publish_date="2025-01-01")
+        content = f.context["content"]
+        assert "trend_html" in content
+        assert content["trend_html"] == ""
+
     def test_html_starts_empty(self):
         f = Formatter(publish_date="2025-01-01")
         assert f.html == ""

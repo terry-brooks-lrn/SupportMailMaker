@@ -158,7 +158,7 @@ class Formatter:
         self.context: Dict[str, Any] = {
             "publish_date": self.publish_date,
             "edition_month": edition_month_dt,
-            "content": {"issues": [], "oops": [], "wins": [], "news": []},
+            "content": {"issues": [], "oops": [], "wins": [], "news": [], "trend_html": ""},
         }
 
     def __getitem__(self, key):

@@ -135,12 +135,12 @@ def build_interface(formatter):
     """
     with gr.Blocks() as application:
         create_header()
-        inp, inp2 = create_inputs()
+        inp, inp2, trend_input = create_inputs()
         process_btn, markdown_option, output_log = create_actions()
         download_file = create_output()
 
         process_btn.click(
-            fn=is_ready_to_publish_async, inputs=[inp, inp2], outputs=[download_file, inp, inp2]
+            fn=is_ready_to_publish_async, inputs=[inp, inp2, trend_input], outputs=[download_file, inp, inp2]
         )
         markdown_option.select(fn=on_select, inputs=markdown_option)
         inp2.upload(log_file_name_async, inp2)
@@ -163,7 +163,7 @@ def create_header():
 
 def create_inputs():
     """
-    Create input fields for JSON content and file upload.
+    Create input fields for JSON content, file upload, and trends HTML.
     """
     with gr.Row():
         gr.HTML("<h2>Content Input</h2>")
@@ -177,7 +177,18 @@ def create_inputs():
         inp2 = gr.File(
             file_types=[".csv"], file_count="single", label="Upload File"
         )
-    return inp, inp2
+    with gr.Row():
+        gr.HTML("<h2>Trends Content</h2>")
+    with gr.Row():
+        trend_input = gr.Textbox(
+            label="Trends HTML Content",
+            value="",
+            placeholder="Paste HTML content for the Trends section here...",
+            show_label=True,
+            interactive=True,
+            lines=10,
+        )
+    return inp, inp2, trend_input
 
 
 def create_actions() -> Tuple[gr.Button, gr.Checkbox, Log]:
@@ -206,7 +217,7 @@ def create_output():
     return output_file
 
 
-async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=gr.Progress(track_tqdm=True)) -> Any:
+async def is_ready_to_publish_async(json_input: str, file_input: Any, trend_html: str, progress=gr.Progress(track_tqdm=True)) -> Any:
     """
     Check if content is ready for publishing and trigger formatting.
     """
@@ -238,6 +249,7 @@ async def is_ready_to_publish_async(json_input: str, file_input: Any, progress=g
         # Set content in the formatter and initiate publishing
         try:
             current_edition.set_raw_content(content)
+            current_edition.context["content"]["trend_html"] = trend_html or ""
             if await current_edition.send_to_press_async():
                 return await current_edition.publish_async()
         except ValueError as ve:
